@@ -1,0 +1,238 @@
+defaults:
+  ids:
+    ####
+    # main ids
+    ####
+     leftDriveLeader: 2
+     leftDriveFollower: 3
+     rightDriveLeader: 1
+     rightDriveFollower: 4
+
+     azimuth: 6
+     elevation: 7
+     shooter: 15
+     feeder: 9
+     intake: 10
+     spinnyboi: 11
+     climbLeft: 12
+     climbRight: 8
+     bms: 14
+
+    ####
+    # junior ids
+    ####
+  #  azimuth: 5
+  #  shooter: 6
+  #  feeder: 7
+  #  intake: 8
+  #  leftDriveLeader: 1
+  #  leftDriveFollower: 2
+  #  rightDriveLeader: 3
+  #  rightDriveFollower: 4
+  bag:
+    stallTorque: 0.4
+    stallCurrent: 53.0
+    voltage: 12.0
+    maxRPM: 13180
+    mass: 0.32
+    diameter: 0.0404
+  neo:
+    stallTorque: 2.6
+    stallCurrent: 105
+    voltage: 12
+    maxRPM: 5676
+    mass: .425
+    diameter: .06
+  falcon:
+    stallTorque: 4.69
+    stallCurrent: 257
+    voltage: 12
+    maxRPM: 6380
+    mass: .5
+    diameter: .06
+  T775pro:
+    stallTorque: .71
+    stallCurrent: 134
+    voltage: 12
+    maxRPM: 18700
+    mass: 0.362874
+    diameter: .0423
+  driveGearing: "{{ 1 }}"
+  shooterGearing: "{{ .48 / 1 }}"
+  juniorGearing: "{{ 242.0/27.0 }}"
+  azimuthGearing: "{{ 30.0/1.0 }}"
+  elevationGearing: "{{ 350.0/1.0 }}"
+hideFollowers: true
+driveBase:
+  radius: "{{ 23.90069263162104 * 2.54 / 100 / 2}}" # radius of robot in meters
+  wheelRadius: "{{ 6 * 2.54 / 100 / 2}}" # 6 inch diameter wheels in meters
+  gearRatio: "{{ 10 + 8.0 / 9 }}"
+startPosition:
+  x: 3 #-3.5 for opponent trench, 1.7 for the center, 3 for our trench
+  y: 5
+  heading: 3.14159
+transmissions:
+- motors:
+  - id: "{{ defaults.ids.leftDriveLeader }}"
+    name: Drive Left ({{ defaults.ids.leftDriveLeader }})
+    model: Falcon
+    stallTorque: "{{ defaults.falcon.stallTorque }}"
+    stallCurrent: "{{ defaults.falcon.stallCurrent }}"
+    voltage: "{{ defaults.falcon.voltage }}"
+    maxRPM: "{{ defaults.falcon.maxRPM }}"
+    mass: "{{ defaults.falcon.mass }}"
+    diameter: "{{ defaults.falcon.diameter }}"
+    encoderCountsPerRevolution: 2048
+    leftDrive: true
+  - id: "{{ defaults.ids.leftDriveFollower }}"
+    name: Drive Left Follower ({{ defaults.ids.leftDriveFollower }})
+    model: Falcon
+    stallTorque: "{{ defaults.falcon.stallTorque }}"
+    stallCurrent: "{{ defaults.falcon.stallCurrent }}"
+    voltage: "{{ defaults.falcon.voltage }}"
+    maxRPM: "{{ defaults.falcon.maxRPM }}"
+    mass: "{{ defaults.falcon.mass }}"
+    diameter: "{{ defaults.falcon.diameter }}"
+    encoderCountsPerRevolution: 2048
+    leftDrive: true
+  gearRatio: "{{ defaults.driveGearing }}"
+  efficiency: 1
+- motors:
+  - id: "{{ defaults.ids.rightDriveLeader }}"
+    name: Drive Right ({{ defaults.ids.rightDriveLeader }})
+    model: Falcon
+    stallTorque: "{{ defaults.falcon.stallTorque }}"
+    stallCurrent: "{{ defaults.falcon.stallCurrent }}"
+    voltage: "{{ defaults.falcon.voltage }}"
+    maxRPM: "{{ defaults.falcon.maxRPM }}"
+    mass: "{{ defaults.falcon.mass }}"
+    diameter: "{{ defaults.falcon.diameter }}"
+    encoderCountsPerRevolution: 2048
+    rightDrive: true
+  - id: "{{ defaults.ids.rightDriveFollower }}"
+    name: Drive Right Follower ({{ defaults.ids.rightDriveFollower }})
+    model: Falcon
+    stallTorque: "{{ defaults.falcon.stallTorque }}"
+    stallCurrent: "{{ defaults.falcon.stallCurrent }}"
+    voltage: "{{ defaults.falcon.voltage }}"
+    maxRPM: "{{ defaults.falcon.maxRPM }}"
+    mass: "{{ defaults.falcon.mass }}"
+    diameter: "{{ defaults.falcon.diameter }}"
+    encoderCountsPerRevolution: 2048
+    rightDrive: true
+  gearRatio: "{{ defaults.driveGearing }}"
+  efficiency: 1
+- motors:
+  - id: "{{ defaults.ids.azimuth }}"
+    name: "Azimuth ({{ defaults.ids.azimuth }})"
+    model: BAG
+    stallTorque: "{{ defaults.bag.stallTorque }}"
+    stallCurrent: "{{ defaults.bag.stallCurrent }}"
+    voltage: "{{ defaults.bag.voltage }}"
+    maxRPM: "{{ defaults.bag.maxRPM }}"
+    mass: "{{ defaults.bag.mass }}"
+    diameter: "{{ defaults.bag.diameter }}"
+    encoderCountsPerRevolution: 1024
+  gearRatio: "{{ defaults.azimuthGearing }}"
+  efficiency: 1.0
+- motors:
+  - id: "{{ defaults.ids.elevation }}"
+    name: "Elevation ({{ defaults.ids.elevation }})"
+    model: BAG
+    stallTorque: "{{ defaults.bag.stallTorque }}"
+    stallCurrent: "{{ defaults.bag.stallCurrent }}"
+    voltage: "{{ defaults.bag.voltage }}"
+    maxRPM: "{{ defaults.bag.maxRPM }}"
+    mass: "{{ defaults.bag.mass }}"
+    diameter: "{{ defaults.bag.diameter }}"
+    encoderCountsPerRevolution: 1024
+  gearRatio: "{{ defaults.elevationGearing }}"
+  efficiency: 1.0
+- motors:
+  - id: "{{ defaults.ids.shooter }}"
+    name: "Shooter ({{ defaults.ids.shooter }})"
+    model: Falcon
+    stallTorque: "{{ defaults.falcon.stallTorque }}"
+    stallCurrent: "{{ defaults.falcon.stallCurrent }}"
+    voltage: "{{ defaults.falcon.voltage }}"
+    maxRPM: "{{ defaults.falcon.maxRPM }}"
+    mass: "{{ defaults.falcon.mass * 10 }}"
+    diameter: "{{ defaults.falcon.diameter }}"
+  gearRatio: "{{ defaults.shooterGearing }}"
+  efficiency: 1.0
+- motors:
+  - id: "{{ defaults.ids.feeder }}"
+    name: "Feeder ({{ defaults.ids.feeder }})"
+    model: 775Pro
+    stallTorque: "{{ defaults.T775pro.stallTorque }}"
+    stallCurrent: "{{ defaults.T775pro.stallCurrent }}"
+    voltage: "{{ defaults.T775pro.voltage }}"
+    maxRPM: "{{ defaults.T775pro.maxRPM }}"
+    mass: "{{ defaults.T775pro.mass }}"
+    diameter: "{{ defaults.T775pro.diameter }}"
+  gearRatio: 1.0
+  efficiency: 1.0
+- motors:
+  - id: "{{ defaults.ids.intake }}"
+    name: "Intake ({{ defaults.ids.intake }})"
+    model: 775Pro
+    stallTorque: "{{ defaults.T775pro.stallTorque }}"
+    stallCurrent: "{{ defaults.T775pro.stallCurrent }}"
+    voltage: "{{ defaults.T775pro.voltage }}"
+    maxRPM: "{{ defaults.T775pro.maxRPM }}"
+    mass: "{{ defaults.T775pro.mass }}"
+    diameter: "{{ defaults.T775pro.diameter }}"
+  gearRatio: 1.0
+  efficiency: 1.0
+- motors:
+  - id: "{{ defaults.ids.spinnyboi }}"
+    name: "SpinnyBoi ({{ defaults.ids.spinnyboi }})"
+    model: 775Pro
+    stallTorque: "{{ defaults.T775pro.stallTorque }}"
+    stallCurrent: "{{ defaults.T775pro.stallCurrent }}"
+    voltage: "{{ defaults.T775pro.voltage }}"
+    maxRPM: "{{ defaults.T775pro.maxRPM }}"
+    mass: "{{ defaults.T775pro.mass }}"
+    diameter: "{{ defaults.T775pro.diameter }}"
+  gearRatio: 1.0
+  efficiency: 1.0
+- motors:
+  - id: "{{ defaults.ids.bms }}"
+    name: "Ball Management Spinner ({{ defaults.ids.bms }})"
+    model: 775Pro
+    stallTorque: "{{ defaults.T775pro.stallTorque }}"
+    stallCurrent: "{{ defaults.T775pro.stallCurrent }}"
+    voltage: "{{ defaults.T775pro.voltage }}"
+    maxRPM: "{{ defaults.T775pro.maxRPM }}"
+    mass: "{{ defaults.T775pro.mass }}"
+    diameter: "{{ defaults.T775pro.diameter }}"
+  gearRatio: 1.0
+  efficiency: 1.0
+- motors:
+  - id: "{{ defaults.ids.climbRight }}"
+    name: "Climb Right ({{ defaults.ids.climbRight }})"
+    model: 775Pro
+    stallTorque: "{{ defaults.T775pro.stallTorque }}"
+    stallCurrent: "{{ defaults.T775pro.stallCurrent }}"
+    voltage: "{{ defaults.T775pro.voltage }}"
+    maxRPM: "{{ defaults.T775pro.maxRPM }}"
+    mass: "{{ defaults.T775pro.mass }}"
+    diameter: "{{ defaults.T775pro.diameter }}"
+  gearRatio: 1.0
+  efficiency: 1.0
+- motors:
+  - id: "{{ defaults.ids.climbLeft }}"
+    name: "Climb Left ({{ defaults.ids.climbLeft }})"
+    model: 775Pro
+    stallTorque: "{{ defaults.T775pro.stallTorque }}"
+    stallCurrent: "{{ defaults.T775pro.stallCurrent }}"
+    voltage: "{{ defaults.T775pro.voltage }}"
+    maxRPM: "{{ defaults.T775pro.maxRPM }}"
+    mass: "{{ defaults.T775pro.mass }}"
+    diameter: "{{ defaults.T775pro.diameter }}"
+  gearRatio: 1.0
+  efficiency: 1.0
+solenoids:
+  - module: 0
+    name: Intake Pivet Double Solenoid (0)
+

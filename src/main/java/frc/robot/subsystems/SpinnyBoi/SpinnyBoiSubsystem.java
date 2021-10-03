@@ -1,4 +1,4 @@
-package frc.robot.subsystems.SpinnyBoi;
+package frc.robot.subsystems.spinnyboi;
 
 public class SpinnyBoiSubsystem {
     

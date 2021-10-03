@@ -12,17 +12,17 @@ public class Buttons {
 
     //Shooter Subsystem
 
-    JoystickButton operatorAimBot = new JoystickButton(operatorControl, PS4Constants.R2.getValue());
-    JoystickButton operatorSpinUp = new JoystickButton(operatorControl, PS4Constants.L1.getValue());
-    JoystickButton operatorFeeder = new JoystickButton(operatorControl, PS4Constants.L2.getValue());
-    JoystickButton operatorFire = new JoystickButton(operatorControl, PS4Constants.CIRCLE.getValue());
-    JoystickButton operatorZero = new JoystickButton(operatorControl, PS4Constants.SQUARE.getValue());
+    JoystickButton operatorAimBot = new JoystickButton(operatorControl, PS4Constants.R2.getId());
+    JoystickButton operatorSpinUp = new JoystickButton(operatorControl, PS4Constants.L1.getId());
+    JoystickButton operatorFeeder = new JoystickButton(operatorControl, PS4Constants.L2.getId());
+    JoystickButton operatorFire = new JoystickButton(operatorControl, PS4Constants.CIRCLE.getId());
+    JoystickButton operatorZero = new JoystickButton(operatorControl, PS4Constants.SQUARE.getId());
 
-    int operatorAzimuth = PS4Constants.RIGHT_STICK_X.getValue();
-    int operatorElevation = PS4Constants.RIGHT_STICK_Y.getValue();
+    int operatorAzimuth = PS4Constants.RIGHT_STICK_X.getId();
+    int operatorElevation = PS4Constants.RIGHT_STICK_Y.getId();
 
     POVButton operatorNextElevation = new POVButton(operatorControl, 90); // right
     POVButton operatorLastElevation = new POVButton(operatorControl, 270); // left
 
-    JoystickButton setElevationToDashboardNum = new JoystickButton(operatorControl, PS4Constants.OPTIONS.getValue());
+    JoystickButton setElevationToDashboardNum = new JoystickButton(operatorControl, PS4Constants.OPTIONS.getId());
 }

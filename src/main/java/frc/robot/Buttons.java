@@ -9,6 +9,7 @@ public class Buttons {
 
     Joystick driverControl = new Joystick(0);
     Joystick operatorControl = new Joystick(1);
+    JoystickButton driveAutoAim = new JoystickButton(driverControl, PS4Constants.CIRCLE.getId());
 
     JoystickButton operatorSpinForward = new JoystickButton(operatorControl, PS4Constants.TRIANGLE.getId());
     JoystickButton operatorSpinBackward = new JoystickButton(operatorControl, PS4Constants.CROSS.getId());

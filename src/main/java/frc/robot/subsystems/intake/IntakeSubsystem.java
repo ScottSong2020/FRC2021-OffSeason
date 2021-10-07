@@ -3,7 +3,7 @@ package frc.robot.subsystems.intake;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.utils.PS4Constants;
 
-public class intakeSubsystem {
+public class IntakeSubsystem {
 
     private static final String operatorControl = null;
     private WPI_TalonSRX intake;
@@ -12,8 +12,8 @@ public class intakeSubsystem {
         
     }
     
-    POVButton operatorIntake = new POVButton(operatorControl, 180); // down
-    POVButton operatorOutake = new POVButton(operatorControl, 0); // up
-    JoystickButton operatorToggleIntake = new JoystickButton(operatorControl, PS4Constants.R1.getId());
+    // POVButton operatorIntake = new POVButton(operatorControl, 180); // down
+    // POVButton operatorOutake = new POVButton(operatorControl, 0); // up
+    // JoystickButton operatorToggleIntake = new JoystickButton(operatorControl, PS4Constants.R1.getId());
 
 }

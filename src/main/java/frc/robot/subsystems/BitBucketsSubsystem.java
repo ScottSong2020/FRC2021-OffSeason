@@ -25,7 +25,7 @@ public abstract class BitBucketsSubsystem extends SubsystemBase
         this.motorList = new ArrayList<>();
         this.addMotorsToList();
 
-        Robot.ROBOT_SUBSYSTEMS.add(this);
+        Robot.robotSubsystems.add(this);
     }
 
     //Required Implementations

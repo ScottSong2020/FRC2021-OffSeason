@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Robot extends TimedRobot {
 
-    public static final List<BitBucketsSubsystem> ROBOT_SUBSYSTEMS = new ArrayList<>();
+    public static final List<BitBucketsSubsystem> robotSubsystems = new ArrayList<>();
     
     Joystick operatorControl = new Joystick(1);
 
@@ -44,7 +44,7 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
 
         //Run periodic function on all subsystems each time robotPeriodic is called
-        ROBOT_SUBSYSTEMS.forEach(BitBucketsSubsystem::periodic);
+        robotSubsystems.forEach(BitBucketsSubsystem::periodic);
 
         CommandScheduler.getInstance().run();
         climberSubsystem.updateDashboard();

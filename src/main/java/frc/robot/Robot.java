@@ -28,16 +28,14 @@ public class Robot extends TimedRobot {
         climberSubsystem.initialize();
         
         //Initialize all subsystems (do this AFTER subsystem objects are created and instantiated)
-        ROBOT_SUBSYSTEMS.forEach(BitBucketsSubsystem::init);
+        robotSubsystems.forEach(BitBucketsSubsystem::init);
         
         climberSubsystem.setDefaultCommand(new RunCommand(
         () -> climberSubsystem.moveArms(
             operatorControl.getRawAxis(climbLeftAmnt),
             operatorControl.getRawAxis(climbRightAmnt)),climberSubsystem)
         );
-        
-        
-        
+
     }
 
     @Override

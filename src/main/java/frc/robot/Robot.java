@@ -14,11 +14,8 @@ import java.util.List;
 public class Robot extends TimedRobot {
 
     public static final List<BitBucketsSubsystem> robotSubsystems = new ArrayList<>();
-    
-    Joystick operatorControl = new Joystick(1);
+    private final Buttons buttons = new Buttons();
 
-    int climbLeftAmnt = PS4Constants.LEFT_STICK_X.getId();
-    int climbRightAmnt = PS4Constants.RIGHT_STICK_X.getId();
     private ClimberSubsystem climberSubsystem;
     
     @Override
@@ -32,8 +29,8 @@ public class Robot extends TimedRobot {
         
         climberSubsystem.setDefaultCommand(new RunCommand(
         () -> climberSubsystem.moveArms(
-            operatorControl.getRawAxis(climbLeftAmnt),
-            operatorControl.getRawAxis(climbRightAmnt)),climberSubsystem)
+            buttons.operatorControl.getRawAxis(buttons.climbLeftAmnt),
+            buttons.operatorControl.getRawAxis(buttons.climbRightAmnt)),climberSubsystem)
         );
 
     }

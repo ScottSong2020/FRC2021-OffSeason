@@ -13,7 +13,11 @@ public class Buttons {
 
     JoystickButton operatorSpinForward = new JoystickButton(operatorControl, PS4Constants.TRIANGLE.getId());
     JoystickButton operatorSpinBackward = new JoystickButton(operatorControl, PS4Constants.CROSS.getId());
-    
+
+    //Climber Subsystem
+    int climbLeftAmnt = PS4Constants.LEFT_STICK_X.getId();
+    int climbRightAmnt = PS4Constants.RIGHT_STICK_X.getId();
+
     //Shooter Subsystem
 
     JoystickButton operatorAimBot = new JoystickButton(operatorControl, PS4Constants.R2.getId());

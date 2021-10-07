@@ -1,4 +1,4 @@
-package frc.robot.subsystems.spinnyboi;
+package frc.robot.subsystems.spinnyboi2;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 public class SpinnyBoiSubsystem {

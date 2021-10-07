@@ -15,10 +15,23 @@ public class ClimberSubsystem extends SubsystemBase
     boolean activateClimber = false;
     boolean operatorHolding = false;
     boolean driverHolding = false;
+    double leftArmMoved1;
+    double rightArmMoved1;
 
     public void initialize() {
         leftArm = new WPI_TalonSRX(12);
         rightArm = new WPI_TalonSRX(8);
+    }
+    public void moveArms(double leftArmMoved,double rightArmMoved)
+    {
+        leftArmMoved1 = leftArmMoved;
+        rightArmMoved1 = rightArmMoved;
+    }   
+    public void updateDashboard()
+    {
+        SmartDashboard.putNumber("climberSubsystem/leftArm", leftArmMoved1);
+        SmartDashboard.putNumber("climberSubsystem/rightArm", rightArmMoved1);
+
     }
 
     public void setActive() {

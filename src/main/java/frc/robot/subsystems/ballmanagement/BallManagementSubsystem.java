@@ -9,4 +9,9 @@ public class BallManagementSubsystem {
     public void initialize(){
         ballmanagement = new WPI_TalonSRX(14);
     }
+
+    public WPI_TalonSRX getBallmanagement() {
+        return ballmanagement;
+    }
+
 }

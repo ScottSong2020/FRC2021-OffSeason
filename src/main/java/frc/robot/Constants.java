@@ -9,5 +9,8 @@ package frc.robot;
 }
 * </p>
 */
-public class Constants {
+public class Constants
+{
+    public static final int MOTOR_ID_SHOOTER = 15;
+    public static final int MOTOR_ID_FEEDER = 9;
 }

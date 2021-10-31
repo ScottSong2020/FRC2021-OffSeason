@@ -3,6 +3,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
@@ -42,12 +43,12 @@ public class Robot extends TimedRobot {
             buttons.operatorControl.getRawAxis(buttons.climbRightAmnt)),climberSubsystem)
         );
 
-        buttons.operatorFeeder.whenPressed(new RunCommand(() -> {
+        buttons.operatorFeeder.whenPressed(new InstantCommand(() -> {
             if(shooterSubsystem.isFeeding()) shooterSubsystem.stopFeeder();
             else shooterSubsystem.spinFeeder(0.5F);
         }, shooterSubsystem));
 
-        buttons.operatorSpinUp.whenPressed(new RunCommand(() -> {
+        buttons.operatorSpinUp.whenPressed(new InstantCommand(() -> {
             if(shooterSubsystem.isShooting()) shooterSubsystem.stopShooter();
             else shooterSubsystem.spinShooter(0.5F);
         }, shooterSubsystem));

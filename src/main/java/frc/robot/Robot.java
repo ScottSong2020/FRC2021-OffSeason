@@ -33,6 +33,11 @@ public class Robot extends TimedRobot {
             buttons.operatorControl.getRawAxis(buttons.climbRightAmnt)),climberSubsystem)
         );
 
+        buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setOperatorActive());
+        buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setOperatorInactive());
+        buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setDriverActive());
+        buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setDriverInActive());
+        
     }
 
     @Override

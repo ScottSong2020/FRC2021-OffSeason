@@ -6,7 +6,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.utils.PS4Constants;
+import io.github.oblarg.oblog.annotations.Config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,9 @@ public class Robot extends TimedRobot {
         climberSubsystem = new ClimberSubsystem();
         climberSubsystem.initialize();
         
+        IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+        intakeSubsystem.initialize();
+
         //Initialize all subsystems (do this AFTER subsystem objects are created and instantiated)
         robotSubsystems.forEach(BitBucketsSubsystem::init);
         
@@ -33,6 +38,7 @@ public class Robot extends TimedRobot {
             buttons.operatorControl.getRawAxis(buttons.climbRightAmnt)),climberSubsystem)
         );
 
+        //intakeSubsystem.WhenPressed this is to wire up intake subsystem buttons, will do next meeting
     }
 
     @Override

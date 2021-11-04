@@ -10,4 +10,6 @@ package frc.robot;
 * </p>
 */
 public class Constants {
+    public static final int INTAKE_MOTOR_ID = 10;
+
 }

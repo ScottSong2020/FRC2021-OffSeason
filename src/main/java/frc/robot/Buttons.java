@@ -32,5 +32,9 @@ public class Buttons {
     POVButton operatorNextElevation = new POVButton(operatorControl, 90); // right
     POVButton operatorLastElevation = new POVButton(operatorControl, 270); // left
 
+    //intake and outtake subsystems
+    POVButton operatorIntakeIn = new POVButton(operatorControl, 0); 
+    POVButton operatorIntakeOut = new POVButton(operatorControl, 180);
+
     JoystickButton setElevationToDashboardNum = new JoystickButton(operatorControl, PS4Constants.OPTIONS.getId());
 }

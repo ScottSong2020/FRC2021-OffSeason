@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
         this.dashboardConfig = new DashboardConfig();
 
         climberSubsystem = new ClimberSubsystem();
-        climberSubsystem.initialize();
+        climberSubsystem.init();
 
         this.shooterSubsystem = new ShooterSubsystem(this.dashboardConfig);
         this.shooterSubsystem.init();
@@ -43,6 +43,11 @@ public class Robot extends TimedRobot {
             buttons.operatorControl.getRawAxis(buttons.climbRightAmnt)),climberSubsystem)
         );
 
+        buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setOperatorActive());
+        buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setOperatorInactive());
+        buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setDriverActive());
+        buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setDriverInActive());
+        
         buttons.operatorFeeder.whenPressed(new InstantCommand(() -> {
             if(shooterSubsystem.isFeeding()) shooterSubsystem.stopFeeder();
             else shooterSubsystem.spinFeeder(0.5F);

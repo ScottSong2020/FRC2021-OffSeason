@@ -64,4 +64,7 @@ public abstract class BitBucketsSubsystem extends SubsystemBase
         else if(value instanceof String) SmartDashboard.putString(key, (String)value);
         else if(value instanceof Sendable) SmartDashboard.putData(key, (Sendable)value);
     }
+
+    public void updateDashboard() {
+    }
 }

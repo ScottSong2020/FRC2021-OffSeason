@@ -18,6 +18,7 @@ public class ClimberSubsystem extends BitBucketsSubsystem
     }
     private WPI_TalonSRX leftArm;
     private WPI_TalonSRX rightArm;
+
     boolean pit = false;
     double motorSpeed = 0.1;
     boolean activateClimber = false;

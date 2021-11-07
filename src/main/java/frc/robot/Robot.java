@@ -13,6 +13,8 @@ import frc.robot.utils.PS4Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Robot extends TimedRobot {
 
@@ -23,6 +25,12 @@ public class Robot extends TimedRobot {
     private ClimberSubsystem climberSubsystem;
     private ShooterSubsystem shooterSubsystem;
     
+    private ExecutorService smartDashboardThread = Executors.newSingleThreadExecutor();
+
+    private List<BitBucketsSubsystem> subsystems = new ArrayList<>();
+
+    private boolean disableDash = false;
+
     @Override
     public void robotInit() {
 
@@ -33,6 +41,14 @@ public class Robot extends TimedRobot {
 
         this.shooterSubsystem = new ShooterSubsystem(this.dashboardConfig);
         this.shooterSubsystem.init();
+
+        subsystems.add(climberSubsystem);
+        subsystems.add(shooterSubsystem);
+
+        for(BitBucketsSubsystem subsystemsToBeAdded: subsystems)
+        {
+            subsystemsToBeAdded.init();
+        }
         
         //Initialize all subsystems (do this AFTER subsystem objects are created and instantiated)
         robotSubsystems.forEach(BitBucketsSubsystem::init);
@@ -57,6 +73,31 @@ public class Robot extends TimedRobot {
             if(shooterSubsystem.isShooting()) shooterSubsystem.stopShooter();
             else shooterSubsystem.spinShooter(0.5F);
         }, shooterSubsystem));
+
+
+        smartDashboardThread.submit(() -> {
+            // run forever
+            while(true) {
+                // check if we should still be running, and break if not
+                if(disableDash)
+                {
+                    break;
+                }
+
+                // do some updates
+                for(BitBucketsSubsystem subsystemsToBeAdded: subsystems)
+                {
+                    subsystemsToBeAdded.updateDashboard();
+                }
+                // only update once a second
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
@@ -66,7 +107,6 @@ public class Robot extends TimedRobot {
         robotSubsystems.forEach(BitBucketsSubsystem::periodic);
 
         CommandScheduler.getInstance().run();
-        climberSubsystem.updateDashboard();
     }
 
     @Override

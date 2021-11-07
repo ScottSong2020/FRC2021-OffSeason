@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
         });
 
         buttons.operatorSpinBackward.whenPressed(() -> {
-            spinnyBoiSubsystem.SpinBackward();
+            spinnyBoiSubsystem.spinBackward();
         });
 
         buttons.operatorSpinForward.whenReleased(() -> {

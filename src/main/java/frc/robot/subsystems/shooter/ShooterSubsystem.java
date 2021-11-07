@@ -3,6 +3,7 @@ package frc.robot.subsystems.shooter;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import frc.robot.Constants;
+import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import frc.robot.utils.DashboardConfig;
 import frc.robot.utils.DashboardKey;
@@ -18,16 +19,16 @@ public class ShooterSubsystem extends BitBucketsSubsystem
     private WPI_TalonSRX feederMotor;
     private WPI_TalonSRX shooterMotor;
 
-    public ShooterSubsystem(DashboardConfig dbConfig)
+    public ShooterSubsystem(Config config,DashboardConfig dbConfig)
     {
-        super(dbConfig);
+        super(config,dbConfig);
     }
 
     @Override
     public void init()
     {
-        this.feederMotor = new WPI_TalonSRX(Constants.MOTOR_ID_FEEDER);
-        this.shooterMotor = new WPI_TalonSRX(Constants.MOTOR_ID_SHOOTER);
+        this.feederMotor = new WPI_TalonSRX(config.FEEDER_MOTOR_ID);
+        this.shooterMotor = new WPI_TalonSRX(config.SHOOTER_MOTOR_ID);
 
         this.isFeeding = false;
         this.isShooting = false;

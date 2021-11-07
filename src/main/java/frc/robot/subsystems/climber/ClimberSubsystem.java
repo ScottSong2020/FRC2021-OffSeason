@@ -3,38 +3,109 @@ package frc.robot.subsystems.climber;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.subsystems.BitBucketsSubsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class ClimberSubsystem extends SubsystemBase
+public class ClimberSubsystem extends BitBucketsSubsystem
 {
     private WPI_TalonSRX leftArm;
     private WPI_TalonSRX rightArm;
+    boolean pit = false;
+    double motorSpeed = 0.1;
     boolean activateClimber = false;
     boolean operatorHolding = false;
     boolean driverHolding = false;
     double leftArmMoved1;
     double rightArmMoved1;
 
-    public void initialize() {
-        leftArm = new WPI_TalonSRX(12);
-        rightArm = new WPI_TalonSRX(8);
+    @Override
+    public void init() {
+       // leftArm = new WPI_TalonSRX(12);
+       // rightArm = new WPI_TalonSRX(8);
+        // junior motors
+       leftArm = new WPI_TalonSRX(1);
+       rightArm = new WPI_TalonSRX(2);
+       rightArm.setInverted(true);
+       SmartDashboard.putNumber("climberSubsystem/leftArm", leftArmMoved1);
+       SmartDashboard.putNumber("climberSubsystem/rightArm", rightArmMoved1);
+
+        SmartDashboard.setDefaultBoolean(this.getName() + "/pitEnabled", false);
+        SmartDashboard.setDefaultNumber(this.getName() + "/motorSpeed", 0.1);
     }
+
     public void moveArms(double leftArmMoved,double rightArmMoved)
     {
-        leftArmMoved1 = leftArmMoved;
-        rightArmMoved1 = rightArmMoved;
+        if(!pit)
+        {
+            leftArmMoved1 = Math.abs(leftArmMoved)*motorSpeed;
+            rightArmMoved1 = Math.abs(rightArmMoved)*motorSpeed;
+        }
+        else
+        {
+            leftArmMoved1 = (leftArmMoved)*motorSpeed;
+            rightArmMoved1 = (rightArmMoved)*motorSpeed;  
+
+        }
+        if(activateClimber)
+        {
+            leftArm.set(ControlMode.PercentOutput,leftArmMoved1);
+            rightArm.set(ControlMode.PercentOutput,rightArmMoved1);
+            
+        }
+
     }   
     public void updateDashboard()
     {
         SmartDashboard.putNumber("climberSubsystem/leftArm", leftArmMoved1);
         SmartDashboard.putNumber("climberSubsystem/rightArm", rightArmMoved1);
 
-    }
 
-    public void setActive() {
-       
+        var pitEnabled = SmartDashboard.getBoolean(this.getName() + "/pitEnabled", false);
+        var motorValues = SmartDashboard.getNumber(this.getName() + "/motorSpeed", 0.1);
+        motorSpeed = motorValues;
+        pit = pitEnabled;
+
     }
+    public void setOperatorActive() {
+        operatorHolding = true;
+        if(operatorHolding && driverHolding)
+        {
+            activateClimber = true;
+        }
+     }
+     public void setOperatorInactive() {
+        operatorHolding = false;
+    
+     }
+     public void setDriverActive() {
+        driverHolding = true;
+        if(operatorHolding && driverHolding)
+        {
+            activateClimber = true;
+        }
+     }
+     public void setDriverInActive() 
+     {
+        driverHolding = false;
+     }
+    
+    @Override
+    protected void addMotorsToList() {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public void periodic() {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public void disable() {
+        // TODO Auto-generated method stub
+        
+    }
+   
 }

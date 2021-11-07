@@ -23,11 +23,15 @@ public class ClimberSubsystem extends SubsystemBase
     public void initialize() {
         leftArm = new WPI_TalonSRX(12);
         rightArm = new WPI_TalonSRX(8);
+        // junior motors
+     //  leftArm = new WPI_TalonSRX(1);
+       //rightArm = new WPI_TalonSRX(2);
+       rightArm.setInverted(true);
     }
     public void moveArms(double leftArmMoved,double rightArmMoved)
     {
-        leftArmMoved1 = Math.abs(leftArmMoved)*0.1;
-        rightArmMoved1 = Math.abs(rightArmMoved)*0.1;
+        leftArmMoved1 = Math.abs(leftArmMoved)*1;
+        rightArmMoved1 = Math.abs(rightArmMoved)*1;
 
         if(activateClimber)
         {

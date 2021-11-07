@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
 
         this.dashboardConfig = new DashboardConfig();
 
-        climberSubsystem = new ClimberSubsystem();
+        climberSubsystem = new ClimberSubsystem(dashboardConfig);
         climberSubsystem.init();
 
         this.shooterSubsystem = new ShooterSubsystem(this.dashboardConfig);

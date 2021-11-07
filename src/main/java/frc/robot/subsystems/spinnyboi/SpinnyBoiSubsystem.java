@@ -19,8 +19,12 @@ public class SpinnyBoiSubsystem extends BitBucketsSubsystem{
         
     }
 
-    public void spinUp(){
+    public void spinForward(){
         spinnyboi.set(ControlMode.PercentOutput, 50);
+    }
+
+    public void SpinBackward(){
+        spinnyboi.set(ControlMode.PercentOutput, -50);
     }
 
     public void stopSpin(){

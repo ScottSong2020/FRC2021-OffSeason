@@ -35,7 +35,15 @@ public class Robot extends TimedRobot {
         spinnyBoiSubsystem.init();
 
         buttons.operatorSpinForward.whenPressed(() -> {
-            spinnyBoiSubsystem.spinUp();
+            spinnyBoiSubsystem.spinForward();
+        });
+
+        buttons.operatorSpinBackward.whenPressed(() -> {
+            spinnyBoiSubsystem.SpinBackward();
+        });
+
+        buttons.operatorSpinForward.whenReleased(() -> {
+            spinnyBoiSubsystem.stopSpin();
         });
 
         buttons.operatorSpinBackward.whenReleased(() -> {

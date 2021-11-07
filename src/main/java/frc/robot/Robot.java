@@ -3,10 +3,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.shooter.ShooterSubsystem;
+import frc.robot.utils.DashboardConfig;
 import frc.robot.utils.PS4Constants;
 import io.github.oblarg.oblog.annotations.Config;
 
@@ -17,14 +20,21 @@ public class Robot extends TimedRobot {
 
     public static final List<BitBucketsSubsystem> robotSubsystems = new ArrayList<>();
     private final Buttons buttons = new Buttons();
+    private DashboardConfig dashboardConfig;
 
     private ClimberSubsystem climberSubsystem;
+    private ShooterSubsystem shooterSubsystem;
     
     @Override
     public void robotInit() {
 
+        this.dashboardConfig = new DashboardConfig();
+
         climberSubsystem = new ClimberSubsystem();
         climberSubsystem.initialize();
+
+        this.shooterSubsystem = new ShooterSubsystem(this.dashboardConfig);
+        this.shooterSubsystem.init();
         
         IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
         intakeSubsystem.initialize();
@@ -39,6 +49,15 @@ public class Robot extends TimedRobot {
         );
 
         //intakeSubsystem.WhenPressed this is to wire up intake subsystem buttons, will do next meeting
+        buttons.operatorFeeder.whenPressed(new InstantCommand(() -> {
+            if(shooterSubsystem.isFeeding()) shooterSubsystem.stopFeeder();
+            else shooterSubsystem.spinFeeder(0.5F);
+        }, shooterSubsystem));
+
+        buttons.operatorSpinUp.whenPressed(new InstantCommand(() -> {
+            if(shooterSubsystem.isShooting()) shooterSubsystem.stopShooter();
+            else shooterSubsystem.spinShooter(0.5F);
+        }, shooterSubsystem));
     }
 
     @Override

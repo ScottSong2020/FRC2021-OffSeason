@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.utils.DashboardConfig;
+import frc.robot.utils.DashboardKey;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,14 +15,16 @@ import java.util.List;
 public abstract class BitBucketsSubsystem extends SubsystemBase
 {
     protected final DriverStation driverStation;
+    protected final DashboardConfig dashboardConfig;
 
-    protected final List<? extends BaseTalon> motorList;
+    protected final List<BaseTalon> motorList;
 
-    public BitBucketsSubsystem()
+    public BitBucketsSubsystem(DashboardConfig dashboardConfig)
     {
         this.setName(this.getClass().getSimpleName());
 
         this.driverStation = DriverStation.getInstance();
+        this.dashboardConfig = dashboardConfig;
 
         this.motorList = new ArrayList<>();
         this.addMotorsToList();
@@ -49,9 +53,11 @@ public abstract class BitBucketsSubsystem extends SubsystemBase
     }
 
     //Dashboard Updates
-    protected <T> void updateDashboard(String name, T value)
+    protected <T> void updateDashboard(DashboardKey enumKey, T value)
     {
-        String key = this.getName() + "/" + name;
+        if(!this.dashboardConfig.isEnabled(enumKey)) return;
+
+        String key = this.getName() + "/" + enumKey.name;
 
         if(value instanceof Boolean) SmartDashboard.putBoolean(key, (boolean)value);
         else if(value instanceof Integer || value instanceof Double || value instanceof Float) SmartDashboard.putNumber(key, (double)value);

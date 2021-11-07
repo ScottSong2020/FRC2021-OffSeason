@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
 
         climberSubsystem = new ClimberSubsystem();
-        climberSubsystem.initialize();
+        climberSubsystem.init();
         
         //Initialize all subsystems (do this AFTER subsystem objects are created and instantiated)
         robotSubsystems.forEach(BitBucketsSubsystem::init);

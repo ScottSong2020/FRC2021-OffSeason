@@ -2,13 +2,14 @@ package frc.robot.subsystems.spinnyboi;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import frc.robot.utils.DashboardConfig;
 
 public class SpinnyBoiSubsystem extends BitBucketsSubsystem{
 
-    public SpinnyBoiSubsystem(DashboardConfig dashboardConfig) {
-        super(dashboardConfig);
+    public SpinnyBoiSubsystem(Config config, DashboardConfig dashboardConfig) {
+        super(config, dashboardConfig);
     }
 
     private WPI_TalonSRX spinnyboi;

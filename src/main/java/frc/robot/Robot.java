@@ -39,7 +39,7 @@ public class Robot extends TimedRobot {
         this.config = new Config();
 
         //SpinnyBoi Subsystem motors
-        spinnyBoiSubsystem = new SpinnyBoiSubsystem(dashboardConfig);
+        spinnyBoiSubsystem = new SpinnyBoiSubsystem(config, dashboardConfig);
         spinnyBoiSubsystem.init();
 
         buttons.operatorSpinForward.whenPressed(() -> {
@@ -58,13 +58,13 @@ public class Robot extends TimedRobot {
             spinnyBoiSubsystem.stopSpin();
         });
 
-        climberSubsystem = new ClimberSubsystem(dashboardConfig);
+        climberSubsystem = new ClimberSubsystem(config, dashboardConfig);
         climberSubsystem.init();
 
         this.shooterSubsystem = new ShooterSubsystem(this.config, this.dashboardConfig);
         this.shooterSubsystem.init();
 
-        this.turretSubsystem = new TurretSubsystem(this.dashboardConfig);
+        this.turretSubsystem = new TurretSubsystem(config, this.dashboardConfig);
         this.turretSubsystem.init();
         
         // Initialize all subsystems (do this AFTER subsystem objects are created and

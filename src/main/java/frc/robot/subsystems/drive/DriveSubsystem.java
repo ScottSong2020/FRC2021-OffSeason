@@ -2,9 +2,16 @@ package frc.robot.subsystems.drive;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
+import frc.robot.utils.DashboardConfig;
 
 public class DriveSubsystem extends BitBucketsSubsystem{
+    
+    public DriveSubsystem(Config config, DashboardConfig dashboardConfig) {
+        super(config, dashboardConfig);
+        //TODO Auto-generated constructor stub
+    }
     private WPI_TalonSRX leftDriveLeader;
     private WPI_TalonSRX rightDriveLeader;
     private WPI_TalonSRX rightDriveFollower;

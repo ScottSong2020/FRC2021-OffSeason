@@ -6,14 +6,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import frc.robot.utils.DashboardConfig;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends BitBucketsSubsystem
 {
-    public ClimberSubsystem(DashboardConfig dashboardConfig) {
-        super(dashboardConfig);
+    public ClimberSubsystem(Config config, DashboardConfig dashboardConfig) {
+        super(config, dashboardConfig);
         //TODO Auto-generated constructor stub
     }
     private WPI_TalonSRX leftArm;

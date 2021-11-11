@@ -3,11 +3,17 @@ package frc.robot.subsystems.turret;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import frc.robot.utils.DashboardConfig;
 
 public class TurretSubsystem extends BitBucketsSubsystem {
     
+    public TurretSubsystem(Config config, DashboardConfig dashboardConfig) {
+        super(config, dashboardConfig);
+        //TODO Auto-generated constructor stub
+    }
+
     //Class lacks dashboard updates as of right now
     private WPI_TalonSRX elevation;
     private WPI_TalonSRX azimuth;
@@ -20,10 +26,7 @@ public class TurretSubsystem extends BitBucketsSubsystem {
         azimuth = new WPI_TalonSRX(6);
     }
 
-    public TurretSubsystem(DashboardConfig dashConfig) {
-        super(dashConfig);
-    }
-
+ 
     public void setAzimuth(double degrees) {
          double position = degrees / 360.0 / azimuthGearRatio * ticksPerRevolution;
          azimuth.set(ControlMode.Position, position);

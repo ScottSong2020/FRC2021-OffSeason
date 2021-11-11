@@ -11,6 +11,7 @@ import frc.robot.subsystems.climber.ClimberSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.spinnyboi.SpinnyBoiSubsystem;
+import frc.robot.subsystems.turret.TurretSubsystem;
 import frc.robot.utils.DashboardConfig;
 import frc.robot.utils.PS4Constants;
 
@@ -29,7 +30,8 @@ public class Robot extends TimedRobot {
     private ShooterSubsystem shooterSubsystem;
     private DriveSubsystem driveSubsystem;
     private SpinnyBoiSubsystem spinnyBoiSubsystem;
-
+    private TurretSubsystem turretSubsystem;
+    
     @Override
     public void robotInit() {
 
@@ -62,9 +64,13 @@ public class Robot extends TimedRobot {
         this.shooterSubsystem = new ShooterSubsystem(this.config, this.dashboardConfig);
         this.shooterSubsystem.init();
 
+        this.turretSubsystem = new TurretSubsystem(this.dashboardConfig);
+        this.turretSubsystem.init();
+        
         // Initialize all subsystems (do this AFTER subsystem objects are created and
         // instantiated)
-        robotSubsystems.forEach(BitBucketsSubsystem::init);
+
+      robotSubsystems.forEach(BitBucketsSubsystem::init);
 
         climberSubsystem.setDefaultCommand(new RunCommand(
                 () -> climberSubsystem.moveArms(buttons.operatorControl.getRawAxis(buttons.climbLeftAmnt),

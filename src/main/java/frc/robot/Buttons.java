@@ -33,4 +33,6 @@ public class Buttons {
     POVButton operatorLastElevation = new POVButton(operatorControl, 270); // left
 
     JoystickButton setElevationToDashboardNum = new JoystickButton(operatorControl, PS4Constants.OPTIONS.getId());
+    public int driveSpeedAxis;
+    public int driveTurnAxis;
 }

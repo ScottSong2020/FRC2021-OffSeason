@@ -8,11 +8,13 @@ import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
+import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.spinnyboi.SpinnyBoiSubsystem;
 import frc.robot.utils.DashboardConfig;
 import frc.robot.utils.PS4Constants;
 
+import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +27,9 @@ public class Robot extends TimedRobot {
 
     private ClimberSubsystem climberSubsystem;
     private ShooterSubsystem shooterSubsystem;
+    private DriveSubsystem driveSubsystem;
     private SpinnyBoiSubsystem spinnyBoiSubsystem;
-  
+
     @Override
     public void robotInit() {
 
@@ -86,6 +89,16 @@ public class Robot extends TimedRobot {
             else
                 shooterSubsystem.spinShooter(0.5F);
         }, shooterSubsystem));
+        
+        Buttons b = new Buttons();
+
+        driveSubsystem.setDefaultCommand(new RunCommand(
+            () -> DriveSubsystem.drive(
+                b.driverControl.getRawAxis(b.driveSpeedAxis),
+                b.driverControl.getRawAxis(b.driveTurnAxis)),
+                driveSubsystem)
+        );
+        
     }
 
     @Override

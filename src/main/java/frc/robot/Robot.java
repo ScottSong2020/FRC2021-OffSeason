@@ -9,6 +9,7 @@ import frc.robot.subsystems.BitBucketsSubsystem;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
+import frc.robot.subsystems.spinnyboi.SpinnyBoiSubsystem;
 import frc.robot.utils.DashboardConfig;
 import frc.robot.utils.PS4Constants;
 
@@ -24,15 +25,36 @@ public class Robot extends TimedRobot {
 
     private ClimberSubsystem climberSubsystem;
     private ShooterSubsystem shooterSubsystem;
-
+    private SpinnyBoiSubsystem spinnyBoiSubsystem;
+  
     @Override
     public void robotInit() {
 
         this.dashboardConfig = new DashboardConfig();
         this.config = new Config();
 
-        climberSubsystem = new ClimberSubsystem();
-        climberSubsystem.initialize();
+        //SpinnyBoi Subsystem motors
+        spinnyBoiSubsystem = new SpinnyBoiSubsystem(dashboardConfig);
+        spinnyBoiSubsystem.init();
+
+        buttons.operatorSpinForward.whenPressed(() -> {
+            spinnyBoiSubsystem.spinForward();
+        });
+
+        buttons.operatorSpinBackward.whenPressed(() -> {
+            spinnyBoiSubsystem.spinBackward();
+        });
+
+        buttons.operatorSpinForward.whenReleased(() -> {
+            spinnyBoiSubsystem.stopSpin();
+        });
+
+        buttons.operatorSpinBackward.whenReleased(() -> {
+            spinnyBoiSubsystem.stopSpin();
+        });
+
+        climberSubsystem = new ClimberSubsystem(dashboardConfig);
+        climberSubsystem.init();
 
         this.shooterSubsystem = new ShooterSubsystem(this.config, this.dashboardConfig);
         this.shooterSubsystem.init();
@@ -46,6 +68,11 @@ public class Robot extends TimedRobot {
                         buttons.operatorControl.getRawAxis(buttons.climbRightAmnt)),
                 climberSubsystem));
 
+        buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setOperatorActive());
+        buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setOperatorInactive());
+        buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setDriverActive());
+        buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setDriverInActive());
+        
         buttons.operatorFeeder.whenPressed(new InstantCommand(() -> {
             if (shooterSubsystem.isFeeding())
                 shooterSubsystem.stopFeeder();

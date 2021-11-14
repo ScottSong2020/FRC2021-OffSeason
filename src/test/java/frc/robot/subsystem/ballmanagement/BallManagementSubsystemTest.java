@@ -37,8 +37,7 @@ public class BallManagementSubsystemTest extends SubsystemTest {
     @Mock
     WPI_TalonSRX motor;
 
-    @Mock
-    Config config;
+    Config config = new Config();
 
     @Mock
     DashboardConfig dashboardConfig;
@@ -50,7 +49,7 @@ public class BallManagementSubsystemTest extends SubsystemTest {
         // when our subsystem is initialized, it will create a motor. We
         // don't want actual motors to be created, we want mock ones. Make sure we
         // return our mocked instances instead of new real instances.
-        whenNew(WPI_TalonSRX.class).withArguments(eq(14)).thenReturn(motor);
+        whenNew(WPI_TalonSRX.class).withArguments(eq(config.BALL_MANAGEMENT_MOTOR_ID)).thenReturn(motor);
     }
 
     /**
@@ -66,7 +65,7 @@ public class BallManagementSubsystemTest extends SubsystemTest {
 
         // verify that the motor is set to intake
         assertNotNull(subsystem.getBallmanagement());
-        verifyNew(WPI_TalonSRX.class).withArguments(14);
+        verifyNew(WPI_TalonSRX.class).withArguments(config.BALL_MANAGEMENT_MOTOR_ID);
     }
 
 }

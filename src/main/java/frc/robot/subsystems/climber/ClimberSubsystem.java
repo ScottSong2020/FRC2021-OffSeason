@@ -30,8 +30,8 @@ public class ClimberSubsystem extends BitBucketsSubsystem
 
     @Override
     public void init() {
-       // leftArm = new WPI_TalonSRX(12);
-       // rightArm = new WPI_TalonSRX(8);
+       // leftArm = new WPI_TalonSRX(config.LEFT_ARM_MOTOR_ID);
+       // rightArm = new WPI_TalonSRX(config.RIGHT_ARM_MOTOR_ID);
         // junior motors
        leftArm = new WPI_TalonSRX(1);
        rightArm = new WPI_TalonSRX(2);

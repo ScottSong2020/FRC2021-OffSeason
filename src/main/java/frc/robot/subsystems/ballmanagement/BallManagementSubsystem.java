@@ -15,7 +15,7 @@ public class BallManagementSubsystem extends BitBucketsSubsystem {
     private WPI_TalonSRX ballmanagement;
 
     public void init() {
-        ballmanagement = new WPI_TalonSRX(14);
+        ballmanagement = new WPI_TalonSRX(config.BALL_MANAGEMENT_MOTOR_ID);
     }
 
     public WPI_TalonSRX getBallmanagement() {

@@ -22,7 +22,7 @@ public class IntakeSubsystem extends BitBucketsSubsystem{
 
     @Override
     public void init() {
-        intake = new WPI_TalonSRX(Constants.INTAKE_MOTOR_ID);
+        intake = new WPI_TalonSRX(config.INTAKE_MOTOR_ID);
         
     }
 

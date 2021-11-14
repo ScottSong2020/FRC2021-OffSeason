@@ -77,7 +77,11 @@ public class Robot extends TimedRobot {
         if (config.enableBallManagementSubsytem) {
             robotSubsystems.add(ballManagementSubsystem = new BallManagementSubsystem(config, dashboardConfig));
         }
-        robotSubsystems.add(intakeSubsystem = new IntakeSubsystem(config, dashboardConfig));
+
+        // Intake
+        if (config.enableIntakeSubsytem) {
+            robotSubsystems.add(intakeSubsystem = new IntakeSubsystem(config, dashboardConfig));
+        }
         // Initialize all subsystems (do this AFTER subsystem objects are created and
         // instantiated)
 

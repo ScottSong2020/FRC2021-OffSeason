@@ -41,7 +41,7 @@ public class Config {
   public int LEFT_DRIVE_FOLLOWER_ID = 4;
 
   // Intake Subsystem
-  public int INTAKE_MOTOR_ID = 1;
+  public int INTAKE_MOTOR_ID = 10;
 
   // Shooter Subsystem
   public int FEEDER_MOTOR_ID = 15;

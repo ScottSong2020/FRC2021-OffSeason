@@ -19,6 +19,7 @@ public class ClimberSubsystem extends BitBucketsSubsystem
     }
     private WPI_TalonSRX leftArm;
     private WPI_TalonSRX rightArm;
+
     boolean pit = false;
     double motorSpeed = 0.1;
     boolean activateClimber = false;
@@ -48,6 +49,7 @@ public class ClimberSubsystem extends BitBucketsSubsystem
         {
             leftArmMoved1 = Math.abs(leftArmMoved)*motorSpeed;
             rightArmMoved1 = Math.abs(rightArmMoved)*motorSpeed;
+
         }
         else
         {
@@ -72,6 +74,14 @@ public class ClimberSubsystem extends BitBucketsSubsystem
         var pitEnabled = SmartDashboard.getBoolean(this.getName() + "/pitEnabled", false);
         var motorValues = SmartDashboard.getNumber(this.getName() + "/motorSpeed", 0.1);
         motorSpeed = motorValues;
+        if (motorSpeed < 0)
+        {
+            motorSpeed = 0;
+        }
+        if (motorSpeed > 1)
+        {
+            motorSpeed =1;
+        }
         pit = pitEnabled;
 
     }

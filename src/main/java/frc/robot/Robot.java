@@ -36,7 +36,6 @@ public class Robot extends TimedRobot {
     
     private ExecutorService smartDashboardThread = Executors.newSingleThreadExecutor();
 
-    private List<BitBucketsSubsystem> subsystems = new ArrayList<>();
 
     private boolean disableDash = false;
 
@@ -47,82 +46,18 @@ public class Robot extends TimedRobot {
         this.config = new Config();
 
         //SpinnyBoi Subsystem motors
-        spinnyBoiSubsystem = new SpinnyBoiSubsystem(config, dashboardConfig);
-        spinnyBoiSubsystem.init();
 
-        buttons.operatorSpinForward.whenPressed(() -> {
-            spinnyBoiSubsystem.spinForward();
-        });
-
-        buttons.operatorSpinBackward.whenPressed(() -> {
-            spinnyBoiSubsystem.spinBackward();
-        });
-
-        buttons.operatorSpinForward.whenReleased(() -> {
-            spinnyBoiSubsystem.stopSpin();
-        });
-
-        buttons.operatorSpinBackward.whenReleased(() -> {
-            spinnyBoiSubsystem.stopSpin();
-        });
-
-        climberSubsystem = new ClimberSubsystem(config, dashboardConfig);
-        climberSubsystem.init();
-
-        this.shooterSubsystem = new ShooterSubsystem(this.config, this.dashboardConfig);
-        this.shooterSubsystem.init();
-
-        this.turretSubsystem = new TurretSubsystem(config, this.dashboardConfig);
-        this.turretSubsystem.init();
-
-        subsystems.add(climberSubsystem);
-        subsystems.add(shooterSubsystem);
-
-        for(BitBucketsSubsystem subsystemsToBeAdded: subsystems)
-        {
-            subsystemsToBeAdded.init();
-        }
-        
+        robotSubsystems.add(climberSubsystem = new ClimberSubsystem(config, dashboardConfig));
+        robotSubsystems.add(turretSubsystem = new TurretSubsystem(config, dashboardConfig));
+        robotSubsystems.add(spinnyBoiSubsystem = new SpinnyBoiSubsystem(config, dashboardConfig));
+        robotSubsystems.add(shooterSubsystem = new ShooterSubsystem(config, dashboardConfig));
+        robotSubsystems.add(driveSubsystem = new DriveSubsystem(config, dashboardConfig));
         // Initialize all subsystems (do this AFTER subsystem objects are created and
         // instantiated)
 
-      robotSubsystems.forEach(BitBucketsSubsystem::init);
-
-        climberSubsystem.setDefaultCommand(new RunCommand(
-                () -> climberSubsystem.moveArms(buttons.operatorControl.getRawAxis(buttons.climbLeftAmnt),
-                        buttons.operatorControl.getRawAxis(buttons.climbRightAmnt)),
-                climberSubsystem));
-
-        buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setOperatorActive());
-        buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setOperatorInactive());
-        buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setDriverActive());
-        buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setDriverInActive());
-        
-        buttons.operatorFeeder.whenPressed(new InstantCommand(() -> {
-            if (shooterSubsystem.isFeeding())
-                shooterSubsystem.stopFeeder();
-            else
-                shooterSubsystem.spinFeeder(0.5F);
-        }, shooterSubsystem));
-
-        buttons.operatorSpinUp.whenPressed(new InstantCommand(() -> {
-            if (shooterSubsystem.isShooting())
-                shooterSubsystem.stopShooter();
-            else
-                shooterSubsystem.spinShooter(0.5F);
-        }, shooterSubsystem));
-        
-        Buttons b = new Buttons();
-
-        driveSubsystem.setDefaultCommand(new RunCommand(
-            () -> DriveSubsystem.drive(
-                b.driverControl.getRawAxis(b.driveSpeedAxis),
-                b.driverControl.getRawAxis(b.driveTurnAxis)),
-                driveSubsystem)
-        );
-        
-
-
+        robotSubsystems.forEach(BitBucketsSubsystem::init);
+        buttonsInit();
+  
         smartDashboardThread.submit(() -> {
             // run forever
             while(true) {
@@ -133,7 +68,7 @@ public class Robot extends TimedRobot {
                 }
 
                 // do some updates
-                for(BitBucketsSubsystem subsystemsToBeAdded: subsystems)
+                for(BitBucketsSubsystem subsystemsToBeAdded: robotSubsystems)
                 {
                     subsystemsToBeAdded.updateDashboard();
                 }
@@ -146,6 +81,59 @@ public class Robot extends TimedRobot {
                 }
             }
         });
+    }
+
+    public void buttonsInit()
+    {
+        buttons.operatorSpinForward.whenPressed(() -> {
+            spinnyBoiSubsystem.spinForward();
+        });
+    
+        buttons.operatorSpinBackward.whenPressed(() -> {
+            spinnyBoiSubsystem.spinBackward();
+        });
+    
+        buttons.operatorSpinForward.whenReleased(() -> {
+            spinnyBoiSubsystem.stopSpin();
+        });
+    
+        buttons.operatorSpinBackward.whenReleased(() -> {
+            spinnyBoiSubsystem.stopSpin();
+        });
+    
+        climberSubsystem.setDefaultCommand(new RunCommand(
+                () -> climberSubsystem.moveArms(buttons.operatorControl.getRawAxis(buttons.climbLeftAmnt),
+                       buttons.operatorControl.getRawAxis(buttons.climbRightAmnt)),climberSubsystem));
+    
+            buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setOperatorActive());
+            buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setOperatorInactive());
+            buttons.operatorClimbActivated.whenPressed(() -> climberSubsystem.setDriverActive());
+            buttons.operatorClimbActivated.whenReleased(() -> climberSubsystem.setDriverInActive());
+            
+            buttons.operatorFeeder.whenPressed(new InstantCommand(() -> {
+                if (shooterSubsystem.isFeeding())
+                    shooterSubsystem.stopFeeder();
+                else
+                    shooterSubsystem.spinFeeder(0.5F);
+            }, shooterSubsystem));
+    
+            buttons.operatorSpinUp.whenPressed(new InstantCommand(() -> {
+                if (shooterSubsystem.isShooting())
+                    shooterSubsystem.stopShooter();
+                else
+                    shooterSubsystem.spinShooter(0.5F);
+            }, shooterSubsystem));
+            
+    
+            driveSubsystem.setDefaultCommand(new RunCommand(
+                () -> DriveSubsystem.drive(
+                    buttons.driverControl.getRawAxis(buttons.driveSpeedAxis),
+                    buttons.driverControl.getRawAxis(buttons.driveTurnAxis)),
+                    driveSubsystem)
+            );
+            
+    
+    
     }
 
     @Override

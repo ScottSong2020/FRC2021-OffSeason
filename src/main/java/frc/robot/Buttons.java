@@ -24,7 +24,7 @@ public class Buttons {
     JoystickButton operatorAimBot = new JoystickButton(operatorControl, PS4Constants.R2.getId());
     JoystickButton operatorSpinUp = new JoystickButton(operatorControl, PS4Constants.L1.getId());
     JoystickButton operatorFeeder = new JoystickButton(operatorControl, PS4Constants.L2.getId());
-    JoystickButton operatorFire = new JoystickButton(operatorControl, PS4Constants.CIRCLE.getId());
+    JoystickButton operatorSpinBMS = new JoystickButton(operatorControl, PS4Constants.CIRCLE.getId());
     JoystickButton operatorZero = new JoystickButton(operatorControl, PS4Constants.SQUARE.getId());
 
     int operatorAzimuth = PS4Constants.RIGHT_STICK_X.getId();

@@ -17,8 +17,10 @@ import org.mockito.Mock;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import frc.robot.config.Config;
 import frc.robot.subsystem.SubsystemTest;
 import frc.robot.subsystems.ballmanagement.BallManagementSubsystem;
+import frc.robot.utils.DashboardConfig;
 
 /**
  * This will test the BallManagementSubsystem. We prepare a couple other classes
@@ -34,6 +36,12 @@ public class BallManagementSubsystemTest extends SubsystemTest {
      */
     @Mock
     WPI_TalonSRX motor;
+
+    @Mock
+    Config config;
+
+    @Mock
+    DashboardConfig dashboardConfig;
 
     @Before
     public void beforeTest() throws Exception {
@@ -53,8 +61,8 @@ public class BallManagementSubsystemTest extends SubsystemTest {
     @Test
     public void testInitialize() throws Exception {
         // create and initialize the subsystem so we have motor objects
-        var subsystem = new BallManagementSubsystem();
-        subsystem.initialize();
+        var subsystem = new BallManagementSubsystem(config, dashboardConfig);
+        subsystem.init();
 
         // verify that the motor is set to intake
         assertNotNull(subsystem.getBallmanagement());

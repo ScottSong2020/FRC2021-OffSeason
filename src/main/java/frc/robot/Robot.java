@@ -24,7 +24,8 @@ public class Robot extends TimedRobot {
 
     private ClimberSubsystem climberSubsystem;
     private ShooterSubsystem shooterSubsystem;
-    
+    private IntakeSubsystem intakeSubsystem;
+
     @Override
     public void robotInit() {
 
@@ -36,8 +37,8 @@ public class Robot extends TimedRobot {
         this.shooterSubsystem = new ShooterSubsystem(this.dashboardConfig);
         this.shooterSubsystem.init();
         
-        IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-        intakeSubsystem.initialize();
+        intakeSubsystem = new IntakeSubsystem(this.dashboardConfig);
+        intakeSubsystem.init();
 
         //Initialize all subsystems (do this AFTER subsystem objects are created and instantiated)
         robotSubsystems.forEach(BitBucketsSubsystem::init);

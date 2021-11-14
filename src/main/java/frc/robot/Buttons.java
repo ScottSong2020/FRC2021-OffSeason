@@ -35,6 +35,7 @@ public class Buttons {
     //intake and outtake subsystems
     POVButton operatorIntakeIn = new POVButton(operatorControl, 0); 
     POVButton operatorIntakeOut = new POVButton(operatorControl, 180);
+    JoystickButton operatorToggleIntake = new JoystickButton(operatorControl, PS4Constants.R1.getId());
 
     JoystickButton setElevationToDashboardNum = new JoystickButton(operatorControl, PS4Constants.OPTIONS.getId());
     JoystickButton operatorClimbActivated = new JoystickButton(operatorControl, PS4Constants.PS4.getId());

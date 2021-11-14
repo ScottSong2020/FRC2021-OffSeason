@@ -22,8 +22,8 @@ public class TurretSubsystem extends BitBucketsSubsystem {
     private double ticksPerRevolution = 8192.0;
 
     public void init() {
-        elevation = new WPI_TalonSRX(7);
-        azimuth = new WPI_TalonSRX(6);
+        elevation = new WPI_TalonSRX(config.ELEVATION_MOTOR_ID);
+        azimuth = new WPI_TalonSRX(config.AZIMUTH_MOTOR_ID);
     }
 
  

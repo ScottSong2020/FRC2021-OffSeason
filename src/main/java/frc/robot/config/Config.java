@@ -35,6 +35,10 @@ public class Config {
   public int RIGHT_ARM_MOTOR_ID = 8;
 
   // Drive Subsystem
+  public int RIGHT_DRIVE_LEADER_ID = 1;
+  public int LEFT_DRIVE_LEADER_ID = 2;
+  public int RIGHT_DRIVE_FOLLOWER_ID = 3;
+  public int LEFT_DRIVE_FOLLOWER_ID = 4;
 
   // Intake Subsystem
   public int INTAKE_MOTOR_ID = 1;

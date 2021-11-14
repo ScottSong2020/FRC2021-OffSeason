@@ -19,10 +19,10 @@ public class DriveSubsystem extends BitBucketsSubsystem{
     private DifferentialDrive differentialDrive;
     @Override
     public void init() {
-        rightDriveLeader = new WPI_TalonSRX(1);
-        leftDriveLeader = new WPI_TalonSRX(2);
-        rightDriveFollower = new WPI_TalonSRX(3);
-        leftDriveFollower = new WPI_TalonSRX(4);
+        rightDriveLeader = new WPI_TalonSRX(config.RIGHT_DRIVE_LEADER_ID);
+        leftDriveLeader = new WPI_TalonSRX(config.LEFT_DRIVE_LEADER_ID);
+        rightDriveFollower = new WPI_TalonSRX(config.RIGHT_DRIVE_FOLLOWER_ID);
+        leftDriveFollower = new WPI_TalonSRX(config.LEFT_DRIVE_FOLLOWER_ID);
 
         DifferentialDrive m_drive = new DifferentialDrive(leftDriveLeader, rightDriveLeader);
     }

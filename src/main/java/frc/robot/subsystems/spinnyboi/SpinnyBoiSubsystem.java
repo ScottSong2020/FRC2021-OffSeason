@@ -16,7 +16,7 @@ public class SpinnyBoiSubsystem extends BitBucketsSubsystem{
 
     @Override
     public void init() {
-        spinnyboi = new WPI_TalonSRX(11);
+        spinnyboi = new WPI_TalonSRX(config.SPINNYBOI_MOTOR_ID);
         
     }
 

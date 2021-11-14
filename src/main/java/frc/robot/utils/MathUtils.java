@@ -12,6 +12,9 @@ public class MathUtils {
    * 
    * Under no circumstances should inputUnit or outputUnit be 0.
    * 
+   * The unit converter works by multiplying the inputQuantity by the ratio
+   * between outputUnit and inputUnit.
+   * 
    * @param inputQuantity How much of a given unit you want to input.
    *
    * @param inputUnit     The specific unit you want to input.
@@ -31,5 +34,12 @@ public class MathUtils {
    */
   public static double clamp(double input, double min, double max) {
     return input < min ? min : input > max ? max : input;
+  }
+
+  /**
+   * Takes the average of 2 numbers.
+   */
+  public static double average(double value, double otherValue) {
+    return (value + otherValue) / 2;
   }
 }

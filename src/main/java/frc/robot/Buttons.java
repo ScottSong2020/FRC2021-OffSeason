@@ -11,6 +11,7 @@ public class Buttons {
     Joystick operatorControl = new Joystick(1);
     JoystickButton driveAutoAim = new JoystickButton(driverControl, PS4Constants.CIRCLE.getId());
 
+    //SpinnyBoi Subsystem
     JoystickButton operatorSpinForward = new JoystickButton(operatorControl, PS4Constants.TRIANGLE.getId());
     JoystickButton operatorSpinBackward = new JoystickButton(operatorControl, PS4Constants.CROSS.getId());
 
@@ -23,7 +24,7 @@ public class Buttons {
     JoystickButton operatorAimBot = new JoystickButton(operatorControl, PS4Constants.R2.getId());
     JoystickButton operatorSpinUp = new JoystickButton(operatorControl, PS4Constants.L1.getId());
     JoystickButton operatorFeeder = new JoystickButton(operatorControl, PS4Constants.L2.getId());
-    JoystickButton operatorFire = new JoystickButton(operatorControl, PS4Constants.CIRCLE.getId());
+    JoystickButton operatorSpinBMS = new JoystickButton(operatorControl, PS4Constants.CIRCLE.getId());
     JoystickButton operatorZero = new JoystickButton(operatorControl, PS4Constants.SQUARE.getId());
 
     int operatorAzimuth = PS4Constants.RIGHT_STICK_X.getId();
@@ -38,7 +39,8 @@ public class Buttons {
     JoystickButton operatorToggleIntake = new JoystickButton(operatorControl, PS4Constants.R1.getId());
 
     JoystickButton setElevationToDashboardNum = new JoystickButton(operatorControl, PS4Constants.OPTIONS.getId());
+    public int driveSpeedAxis;
+    public int driveTurnAxis;
     JoystickButton operatorClimbActivated = new JoystickButton(operatorControl, PS4Constants.PS4.getId());
     JoystickButton driverClimbActivated = new JoystickButton(driverControl, PS4Constants.PS4.getId());
-
 }

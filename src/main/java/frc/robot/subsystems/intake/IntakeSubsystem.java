@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants;
+import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import frc.robot.utils.DashboardConfig;
 import frc.robot.utils.PS4Constants;
@@ -12,8 +13,8 @@ import frc.robot.utils.PS4Constants;
 
 public class IntakeSubsystem extends BitBucketsSubsystem{
 
-    public IntakeSubsystem(DashboardConfig dashboardConfig) {
-        super(dashboardConfig);
+    public IntakeSubsystem(Config config, DashboardConfig dashboardConfig) {
+        super(config, dashboardConfig);
         //TODO Auto-generated constructor stub
     }
 

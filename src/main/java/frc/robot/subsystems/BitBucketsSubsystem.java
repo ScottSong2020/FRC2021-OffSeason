@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
+import frc.robot.config.Config;
 import frc.robot.utils.DashboardConfig;
 import frc.robot.utils.DashboardKey;
 
@@ -15,15 +16,17 @@ import java.util.List;
 public abstract class BitBucketsSubsystem extends SubsystemBase
 {
     protected final DriverStation driverStation;
+    protected final Config config;
     protected final DashboardConfig dashboardConfig;
 
     protected final List<BaseTalon> motorList;
 
-    public BitBucketsSubsystem(DashboardConfig dashboardConfig)
+    public BitBucketsSubsystem(Config config, DashboardConfig dashboardConfig)
     {
         this.setName(this.getClass().getSimpleName());
 
         this.driverStation = DriverStation.getInstance();
+        this.config = config;
         this.dashboardConfig = dashboardConfig;
 
         this.motorList = new ArrayList<>();
@@ -63,5 +66,8 @@ public abstract class BitBucketsSubsystem extends SubsystemBase
         else if(value instanceof Integer || value instanceof Double || value instanceof Float) SmartDashboard.putNumber(key, (double)value);
         else if(value instanceof String) SmartDashboard.putString(key, (String)value);
         else if(value instanceof Sendable) SmartDashboard.putData(key, (Sendable)value);
+    }
+
+    public void updateDashboard() {
     }
 }

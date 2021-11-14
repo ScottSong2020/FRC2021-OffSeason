@@ -6,13 +6,20 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
+import frc.robot.utils.DashboardConfig;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ClimberSubsystem extends BitBucketsSubsystem
 {
+    public ClimberSubsystem(Config config, DashboardConfig dashboardConfig) {
+        super(config, dashboardConfig);
+        //TODO Auto-generated constructor stub
+    }
     private WPI_TalonSRX leftArm;
     private WPI_TalonSRX rightArm;
+
     boolean pit = false;
     double motorSpeed = 0.1;
     boolean activateClimber = false;
@@ -42,6 +49,7 @@ public class ClimberSubsystem extends BitBucketsSubsystem
         {
             leftArmMoved1 = Math.abs(leftArmMoved)*motorSpeed;
             rightArmMoved1 = Math.abs(rightArmMoved)*motorSpeed;
+
         }
         else
         {
@@ -66,6 +74,14 @@ public class ClimberSubsystem extends BitBucketsSubsystem
         var pitEnabled = SmartDashboard.getBoolean(this.getName() + "/pitEnabled", false);
         var motorValues = SmartDashboard.getNumber(this.getName() + "/motorSpeed", 0.1);
         motorSpeed = motorValues;
+        if (motorSpeed < 0)
+        {
+            motorSpeed = 0;
+        }
+        if (motorSpeed > 1)
+        {
+            motorSpeed =1;
+        }
         pit = pitEnabled;
 
     }

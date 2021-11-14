@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
+import frc.robot.subsystems.ballmanagement.BallManagementSubsystem;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
     private DriveSubsystem driveSubsystem;
     private SpinnyBoiSubsystem spinnyBoiSubsystem;
     private TurretSubsystem turretSubsystem;
+    private BallManagementSubsystem ballManagementSubsystem;
     
     @Override
     public void robotInit() {
@@ -66,6 +68,10 @@ public class Robot extends TimedRobot {
 
         this.turretSubsystem = new TurretSubsystem(config, this.dashboardConfig);
         this.turretSubsystem.init();
+
+         ballManagementSubsystem = new BallManagementSubsystem(config, this.dashboardConfig);
+         ballManagementSubsystem.init();
+        
         
         // Initialize all subsystems (do this AFTER subsystem objects are created and
         // instantiated)

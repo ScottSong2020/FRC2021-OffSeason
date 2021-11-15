@@ -14,6 +14,7 @@ import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.spinnyboi.SpinnyBoiSubsystem;
 import frc.robot.subsystems.turret.TurretSubsystem;
+import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.utils.DashboardConfig;
 import frc.robot.utils.PS4Constants;
 
@@ -37,7 +38,8 @@ public class Robot extends TimedRobot {
     private SpinnyBoiSubsystem spinnyBoiSubsystem;
     private TurretSubsystem turretSubsystem;
     private BallManagementSubsystem ballManagementSubsystem;
-
+    private VisionSubsystem visionSubsystem;
+    
     private ExecutorService smartDashboardThread = Executors.newSingleThreadExecutor();
 
     private boolean disableDash = false;
@@ -187,5 +189,11 @@ public class Robot extends TimedRobot {
     public static Robot win() {
         return new Robot();
     }
+
+    public void shoot() {
+        turretSubsystem.setAzimuth(visionSubsystem.getAngle());
+        //how to elevation ??
+    }
+
 
 }

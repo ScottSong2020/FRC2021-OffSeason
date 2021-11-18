@@ -42,7 +42,7 @@ public class IntakeSubsystem extends BitBucketsSubsystem{
       
     }
 
-
+    //intake starts (runs forward)
    
 
 
@@ -64,5 +64,21 @@ public class IntakeSubsystem extends BitBucketsSubsystem{
     public void disable() {
         // TODO Auto-generated method stub
         
+    }
+
+
+    public void spinForward() {
+    }
+
+
+    public void spinBackward() {
+    }
+
+
+    public void startSpinning() {
+    }
+
+
+    public void stopSpinning() {
     }
 }

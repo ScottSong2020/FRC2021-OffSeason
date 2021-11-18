@@ -169,6 +169,36 @@ public class Robot extends TimedRobot {
                     new RunCommand(() -> DriveSubsystem.drive(buttons.driverControl.getRawAxis(buttons.driveSpeedAxis),
                             buttons.driverControl.getRawAxis(buttons.driveTurnAxis)), driveSubsystem));
         }
+            
+    
+          
+            
+    
+        //for intake subsystem button wiring
+        //change the new methods declared to the old ones and fix this function
+        //then make sure the buttons are wired up
+        //--past ib to future ib
+        boolean intakeIsOn = false;
+        buttons.operatorIntakeIn.whenPressed(() -> {
+         //   intakeIsOn = true;
+            intakeSubsystem.spinForward();
+        });
+
+        buttons.operatorIntakeOut.whenPressed(() -> {
+         //   intakeIsOn = true;
+            intakeSubsystem.spinBackward();
+        });
+
+        buttons.operatorToggleIntake.whenPressed(() -> {
+            if (intakeIsOn == false) {
+                intakeSubsystem.startSpinning();
+                intakeSubsystem.spinForward();
+            }
+
+            if (intakeIsOn == true) {
+                intakeSubsystem.stopSpinning();
+            }
+        });
 
     }
 

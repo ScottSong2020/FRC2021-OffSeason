@@ -3,6 +3,8 @@ package frc.robot.subsystems.vision;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
+import java.util.SplittableRandom;
+
 public class VisionSubsystem {
    private double angle;
    private double distance;
@@ -21,6 +23,12 @@ public class VisionSubsystem {
    public double getDistance() {
       distance = 87.0;
       return distance;
+   }
+
+   //Also temporary, just randomly decides if target exists or not
+   public boolean hasTarget()
+   {
+      return new SplittableRandom().nextInt(2) < 1;
    }
 
 }

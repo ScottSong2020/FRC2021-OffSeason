@@ -19,6 +19,8 @@ public class ShooterSubsystem extends BitBucketsSubsystem
     private WPI_TalonSRX feederMotor;
     private WPI_TalonSRX shooterMotor;
 
+    private double shooterTargetSpeed;
+
     public ShooterSubsystem(Config config,DashboardConfig dbConfig)
     {
         super(config,dbConfig);
@@ -32,6 +34,8 @@ public class ShooterSubsystem extends BitBucketsSubsystem
 
         this.isFeeding = false;
         this.isShooting = false;
+
+        this.shooterTargetSpeed = 0;
     }
 
     @Override
@@ -49,10 +53,21 @@ public class ShooterSubsystem extends BitBucketsSubsystem
 
     public void spinFeeder(float target)
     {
-        this.isFeeding = true;
-        this.feederMotor.set(ControlMode.PercentOutput, target);
+        int shooterVelocity = this.shooterMotor.getSelectedSensorVelocity();
+        int ME = 200;
 
-        this.updateDashboard(DashboardKey.FEEDER_STATE, "Feeding");
+        if(this.isShooting && shooterVelocity >= this.shooterTargetSpeed - ME && shooterVelocity <= this.shooterTargetSpeed + ME)
+        {
+            this.isFeeding = true;
+            this.feederMotor.set(ControlMode.PercentOutput, target);
+            this.updateDashboard(DashboardKey.SHOOTER_STATE, "Shooter reached Target Speed");
+            this.updateDashboard(DashboardKey.FEEDER_STATE, "Feeder Active");
+        }
+        else
+        {
+            this.stopFeeder();
+            this.updateDashboard(DashboardKey.FEEDER_STATE, "Off: Shooter is not up to Speed");
+        }
     }
 
     public void stopFeeder()
@@ -63,12 +78,13 @@ public class ShooterSubsystem extends BitBucketsSubsystem
         this.updateDashboard(DashboardKey.FEEDER_STATE, "Off");
     }
 
-    public void spinShooter(float target)
+    public void spinShooter(double targetRPM)
     {
         this.isShooting = true;
-        this.shooterMotor.set(ControlMode.PercentOutput, target);
+        this.shooterTargetSpeed = targetRPM;
+        this.shooterMotor.set(ControlMode.Velocity, targetRPM);
 
-        this.updateDashboard(DashboardKey.SHOOTER_STATE, "Shooting");
+        this.updateDashboard(DashboardKey.SHOOTER_STATE, "Shooter Active: Spinning to " + targetRPM);
     }
 
     public void stopShooter()
@@ -77,6 +93,8 @@ public class ShooterSubsystem extends BitBucketsSubsystem
         this.shooterMotor.set(0);
 
         this.updateDashboard(DashboardKey.SHOOTER_STATE, "Off");
+
+        if(this.isFeeding()) this.stopFeeder();
     }
 
     @Override

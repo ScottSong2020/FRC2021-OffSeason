@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -11,14 +10,13 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.subsystems.shooter.ShooterCalculator;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.spinnyboi.SpinnyBoiSubsystem;
 import frc.robot.subsystems.turret.TurretSubsystem;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.utils.DashboardConfig;
-import frc.robot.utils.PS4Constants;
 
-import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -152,14 +150,22 @@ public class Robot extends TimedRobot {
                 if (shooterSubsystem.isFeeding())
                     shooterSubsystem.stopFeeder();
                 else
-                    shooterSubsystem.spinFeeder(0.5F);
+                    shooterSubsystem.spinFeeder(ShooterCalculator.FEEDER_OUTPUT);
             }, shooterSubsystem));
 
             buttons.operatorSpinUp.whenPressed(new InstantCommand(() -> {
                 if (shooterSubsystem.isShooting())
                     shooterSubsystem.stopShooter();
                 else
-                    shooterSubsystem.spinShooter(0.5F);
+                {
+                    if(!this.visionSubsystem.hasTarget()) shooterSubsystem.spinShooter(ShooterCalculator.DEFAULT_SPEED);
+                    else
+                    {
+                        double targetRPM = new ShooterCalculator().getRPM(this.visionSubsystem.getDistance(), this.visionSubsystem.getAngle());
+                        this.shooterSubsystem.spinShooter(targetRPM);
+                    }
+                }
+
             }, shooterSubsystem));
         }
 

@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import frc.robot.config.Config;
+import frc.robot.config.ConfigChooser;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import frc.robot.subsystems.ballmanagement.BallManagementSubsystem;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -48,7 +49,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
 
         this.dashboardConfig = new DashboardConfig();
-        this.config = new Config();
+        this.config = ConfigChooser.GetConfig();
 
         // Climber
         if (config.enableClimberSubsytem) {

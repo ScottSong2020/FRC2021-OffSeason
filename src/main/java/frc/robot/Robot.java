@@ -178,28 +178,32 @@ public class Robot extends TimedRobot {
         //change the new methods declared to the old ones and fix this function
         //then make sure the buttons are wired up
         //--past ib to future ib
-        boolean intakeIsOn = false;
-        buttons.operatorIntakeIn.whenPressed(() -> {
-         //   intakeIsOn = true;
-            intakeSubsystem.spinForward();
-        });
 
-        buttons.operatorIntakeOut.whenPressed(() -> {
-         //   intakeIsOn = true;
-            intakeSubsystem.spinBackward();
-        });
+        buttons.operatorIntakeIn
+            .whenPressed(() -> {
+                intakeSubsystem.spinForward();
+        })
+            .whenReleased(() -> {
+                intakeSubsystem.stopSpinning();
+            })
+        ;
 
-        buttons.operatorToggleIntake.whenPressed(() -> {
-            if (intakeIsOn == false) {
+        buttons.operatorIntakeOut
+            .whenPressed(() -> {
+                intakeSubsystem.spinBackward();
+            })
+            .whenReleased(() -> {
+                intakeSubsystem.stopSpinning();
+            })
+        ;
+
+        buttons.operatorToggleIntake
+            .whenPressed(() -> {
                 intakeSubsystem.startSpinning();
                 intakeSubsystem.spinForward();
-            }
-
-            if (intakeIsOn == true) {
-                intakeSubsystem.stopSpinning();
-            }
-        });
-
+            })
+        ;
+    
     }
 
     @Override

@@ -30,13 +30,13 @@ public class TurretSubsystem extends BitBucketsSubsystem {
  
     public void setAzimuth(double degrees) {
          double position = degrees / 360.0 / azimuthGearRatio * ticksPerRevolution;
-         MathUtils.clamp(position, 0, 180);
+         MathUtils.clamp(position, -90, 90);
          azimuth.set(ControlMode.Position, position);
     }
 
     public void setElevation(double degrees) {
         double position = degrees / 360.0 / elevationGearRatio * ticksPerRevolution;
-        MathUtils.clamp(position, 0, 360); //limit switch of 360 is arbitrary
+        MathUtils.clamp(position, 0, 60); 
         elevation.set(ControlMode.Position, position);
     }
 

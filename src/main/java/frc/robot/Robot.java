@@ -191,8 +191,12 @@ public class Robot extends TimedRobot {
     }
 
     public void shoot() {
-        turretSubsystem.setAzimuth(visionSubsystem.getAngle());
-        //how to elevation ??
+        if (visionSubsystem.hasTarget() == true) {
+            turretSubsystem.setAzimuth(visionSubsystem.getAngle());
+            //Both getDistance and elevationConvert are set to record default values.
+            //getDistance = 82.0;, elevationConvert = 45.0;
+            turretSubsystem.setElevation(turretSubsystem.elevationConvert(visionSubsystem.getDistance()));
+        }
     }
 
 

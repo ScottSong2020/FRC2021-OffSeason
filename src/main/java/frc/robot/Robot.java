@@ -173,7 +173,34 @@ public class Robot extends TimedRobot {
                     new RunCommand(() -> driveSubsystem.drive(buttons.driverControl.getRawAxis(buttons.driveSpeedAxis),
                             buttons.driverControl.getRawAxis(buttons.driveTurnAxis)), driveSubsystem));
         }
+            
+    
+        if (config.enableIntakeSubsytem) {
+            buttons.operatorIntakeIn
+                .whenPressed(() -> {
+                    intakeSubsystem.spinForward();
+            })
+                .whenReleased(() -> {
+                    intakeSubsystem.stopSpinning();
+                })
+            ;
+        
 
+            buttons.operatorIntakeOut
+                .whenPressed(() -> {
+                    intakeSubsystem.spinBackward();
+                })
+                .whenReleased(() -> {
+                    intakeSubsystem.stopSpinning();
+                })
+            ;
+
+            buttons.operatorToggleIntake
+                .whenPressed(() -> {
+                    intakeSubsystem.toggle();
+                })
+            ;
+        }
     }
 
     @Override

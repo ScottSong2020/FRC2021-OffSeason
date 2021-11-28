@@ -7,6 +7,7 @@ import frc.robot.config.Config;
 import frc.robot.config.Config.TurretConfig;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import frc.robot.utils.DashboardConfig;
+import frc.robot.utils.MathUtils;
 
 public class TurretSubsystem extends BitBucketsSubsystem {
     
@@ -30,12 +31,19 @@ public class TurretSubsystem extends BitBucketsSubsystem {
  
     public void setAzimuth(double degrees) {
          double position = degrees / 360.0 / azimuthGearRatio * ticksPerRevolution;
+         MathUtils.clamp(position, -90, 90);
          azimuth.set(ControlMode.Position, position);
     }
 
     public void setElevation(double degrees) {
         double position = degrees / 360.0 / elevationGearRatio * ticksPerRevolution;
+        MathUtils.clamp(position, 0, 60); 
         elevation.set(ControlMode.Position, position);
+    }
+
+    public double elevationConvert(double distance) {
+        double exampleReturn = 45;
+        return exampleReturn;
     }
 
     public WPI_TalonSRX getElevation() {

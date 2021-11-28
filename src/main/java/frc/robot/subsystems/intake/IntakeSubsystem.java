@@ -34,7 +34,7 @@ public class IntakeSubsystem extends BitBucketsSubsystem {
     @Override
     public void init() {
         intake = new WPI_TalonSRX(config.INTAKE_MOTOR_ID);
-        intakeSolenoid = new DoubleSolenoid(1, 2);
+        intakeSolenoid = new DoubleSolenoid(0, 1);
     }
     //intake starts (runs forward)
 
@@ -75,10 +75,12 @@ public class IntakeSubsystem extends BitBucketsSubsystem {
     public void toggle() {
         if (toggleState == false) {
             intakeSolenoid.set(Value.kForward);
+            toggleState = true;
         }
         
         else {
             intakeSolenoid.set(Value.kReverse);
+            toggleState = false;
         }
     }
 

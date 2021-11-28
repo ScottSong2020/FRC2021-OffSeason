@@ -54,9 +54,9 @@ public class ShooterSubsystem extends BitBucketsSubsystem
     public void spinFeeder(float target)
     {
         int shooterVelocity = this.shooterMotor.getSelectedSensorVelocity();
-        int ME = 200;
+        int errorMargin = 200;
 
-        if(this.isShooting && shooterVelocity >= this.shooterTargetSpeed - ME && shooterVelocity <= this.shooterTargetSpeed + ME)
+        if(this.isShooting && shooterVelocity >= this.shooterTargetSpeed - errorMargin && shooterVelocity <= this.shooterTargetSpeed + errorMargin)
         {
             this.isFeeding = true;
             this.feederMotor.set(ControlMode.PercentOutput, target);

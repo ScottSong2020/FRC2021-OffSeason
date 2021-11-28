@@ -30,7 +30,12 @@ public class ShooterCalculator
         double difference = Math.abs(this.dictionary.get(0).getDistance() - distance);
         for(ShooterDictionaryEntry e : this.dictionary)
         {
-            if(Math.abs(e.getDistance() - distance) < difference) speed = e.getSpeed();
+            double checkDiff = Math.abs(e.getDistance() - distance);
+            if(checkDiff < difference)
+            {
+                speed = e.getSpeed();
+                difference = checkDiff;
+            }
         }
 
         return speed;

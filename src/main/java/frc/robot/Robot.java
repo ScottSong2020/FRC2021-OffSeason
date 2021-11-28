@@ -170,7 +170,7 @@ public class Robot extends TimedRobot {
         // Drive
         if (config.enableDriveSubsytem) {
             driveSubsystem.setDefaultCommand(
-                    new RunCommand(() -> DriveSubsystem.drive(buttons.driverControl.getRawAxis(buttons.driveSpeedAxis),
+                    new RunCommand(() -> driveSubsystem.drive(buttons.driverControl.getRawAxis(buttons.driveSpeedAxis),
                             buttons.driverControl.getRawAxis(buttons.driveTurnAxis)), driveSubsystem));
         }
 

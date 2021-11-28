@@ -80,7 +80,7 @@ public class IntakeSubsystem extends BitBucketsSubsystem {
         
         else {
             intakeSolenoid.set(Value.kReverse);
-            toggleState = false;
+            toggleState = false; 
         }
     }
 

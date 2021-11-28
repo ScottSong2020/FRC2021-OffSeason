@@ -172,38 +172,32 @@ public class Robot extends TimedRobot {
         }
             
     
-          
-            
-    
-        //for intake subsystem button wiring
-        //change the new methods declared to the old ones and fix this function
-        //then make sure the buttons are wired up
-        //--past ib to future ib
+        if (config.enableIntakeSubsytem) {
+            buttons.operatorIntakeIn
+                .whenPressed(() -> {
+                    intakeSubsystem.spinForward();
+            })
+                .whenReleased(() -> {
+                    intakeSubsystem.stopSpinning();
+                })
+            ;
+        
 
-        buttons.operatorIntakeIn
-            .whenPressed(() -> {
-                intakeSubsystem.spinForward();
-        })
-            .whenReleased(() -> {
-                intakeSubsystem.stopSpinning();
-            })
-        ;
+            buttons.operatorIntakeOut
+                .whenPressed(() -> {
+                    intakeSubsystem.spinBackward();
+                })
+                .whenReleased(() -> {
+                    intakeSubsystem.stopSpinning();
+                })
+            ;
 
-        buttons.operatorIntakeOut
-            .whenPressed(() -> {
-                intakeSubsystem.spinBackward();
-            })
-            .whenReleased(() -> {
-                intakeSubsystem.stopSpinning();
-            })
-        ;
-
-        buttons.operatorToggleIntake
-            .whenPressed(() -> {
-                intakeSubsystem.toggle();
-            })
-        ;
-    
+            buttons.operatorToggleIntake
+                .whenPressed(() -> {
+                    intakeSubsystem.toggle();
+                })
+            ;
+        }
     }
 
     @Override

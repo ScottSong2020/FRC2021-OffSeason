@@ -88,6 +88,11 @@ public class Robot extends TimedRobot {
         if (config.enableIntakeSubsytem) {
             robotSubsystems.add(intakeSubsystem = new IntakeSubsystem(config, dashboardConfig));
         }
+
+        if(config.enableVisionSubsytem) {
+            robotSubsystems.add(visionSubsystem = new VisionSubsystem(config, dashboardConfig));
+        }
+
         // Initialize all subsystems (do this AFTER subsystem objects are created and
         // instantiated)
 
@@ -150,7 +155,8 @@ public class Robot extends TimedRobot {
                     shooterSubsystem.stopShooter();
                 else
                 {
-                    if(!this.visionSubsystem.hasTarget()) shooterSubsystem.spinShooter(ShooterCalculator.DEFAULT_SPEED);
+                    if(!this.visionSubsystem.hasTarget())
+                        shooterSubsystem.spinShooter(ShooterCalculator.DEFAULT_SPEED);
                     else
                     {
                         double targetRPM = this.shooterCalculator.getRPM(this.visionSubsystem.getDistance(), this.visionSubsystem.getAngle());

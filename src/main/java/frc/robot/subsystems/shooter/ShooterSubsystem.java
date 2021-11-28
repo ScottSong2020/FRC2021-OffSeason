@@ -56,13 +56,13 @@ public class ShooterSubsystem extends BitBucketsSubsystem
         {
             this.isFeeding = true;
             this.feederMotor.set(ControlMode.PercentOutput, target);
-            this.updateDashboard(DashboardKey.SHOOTER_STATE, "Shooter reached Target Speed");
-            this.updateDashboard(DashboardKey.FEEDER_STATE, "Feeder Active");
+            this.setDashboardValue(DashboardKey.SHOOTER_STATE, "Shooter reached Target Speed");
+            this.setDashboardValue(DashboardKey.FEEDER_STATE, "Feeder Active");
         }
         else
         {
             this.stopFeeder();
-            this.updateDashboard(DashboardKey.FEEDER_STATE, "Off: Shooter is not up to Speed");
+            this.setDashboardValue(DashboardKey.FEEDER_STATE, "Off: Shooter is not up to Speed");
         }
     }
 
@@ -71,7 +71,7 @@ public class ShooterSubsystem extends BitBucketsSubsystem
         this.isFeeding = false;
         this.feederMotor.set(0);
 
-        this.updateDashboard(DashboardKey.FEEDER_STATE, "Off");
+        this.setDashboardValue(DashboardKey.FEEDER_STATE, "Off");
     }
 
     public void spinShooter(double targetRPM)
@@ -80,7 +80,7 @@ public class ShooterSubsystem extends BitBucketsSubsystem
         this.shooterTargetSpeed_RPM = targetRPM;
         this.shooterMotor.set(ControlMode.Velocity, targetRPM);
 
-        this.updateDashboard(DashboardKey.SHOOTER_STATE, "Shooter Active: Spinning to " + targetRPM);
+        this.setDashboardValue(DashboardKey.SHOOTER_STATE, "Shooter Active: Spinning to " + targetRPM);
     }
 
     public void stopShooter()
@@ -88,7 +88,7 @@ public class ShooterSubsystem extends BitBucketsSubsystem
         this.isShooting = false;
         this.shooterMotor.set(0);
 
-        this.updateDashboard(DashboardKey.SHOOTER_STATE, "Off");
+        this.setDashboardValue(DashboardKey.SHOOTER_STATE, "Off");
 
         if(this.isFeeding()) this.stopFeeder();
     }

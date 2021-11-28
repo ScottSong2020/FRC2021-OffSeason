@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import frc.robot.Buttons;
 import frc.robot.Constants;
 import frc.robot.config.Config;
 import frc.robot.subsystems.BitBucketsSubsystem;
@@ -25,11 +26,15 @@ public class IntakeSubsystem extends BitBucketsSubsystem {
     }
 
     private WPI_TalonSRX intake;
+    //toggleState tracks what mode the intake solenoid is running in (true == intake, false == outtake)
+    public boolean toggleState;
+    //declaring a double soleniod for the intake
+    DoubleSolenoid intakeSolenoid;
 
     @Override
     public void init() {
         intake = new WPI_TalonSRX(config.INTAKE_MOTOR_ID);
-
+        intakeSolenoid = new DoubleSolenoid(1, 2);
     }
     //intake starts (runs forward)
 
@@ -63,39 +68,18 @@ public class IntakeSubsystem extends BitBucketsSubsystem {
         intake.set(ControlMode.PercentOutput, -0.5);
     }
 
-
-    public void startSpinning() {
-        intake.set(ControlMode.PercentOutput, 0.5);
-    }
-
-
     public void stopSpinning() {
         intake.set(ControlMode.PercentOutput, 0);
     }
 
-    public void pneumatics() {
-
-    //creates closed loop control to allow pressure to be stored
-        Compressor c = new Compressor(0);
-        c.setClosedLoopControl(true);
-        c.setClosedLoopControl(false);
-
-        boolean enabled = c.enabled();
-        boolean pressureSwitch =c.getPressureSwitchValue();
-        double current = c.getCompressorCurrent();
-
-    //declaring a solenoid
-        Solenoid exampleSolenoid = new Solenoid(1);
-        exampleSolenoid.set(true);
-        exampleSolenoid.set(false);
-
-    //double solenoid for intake
-        DoubleSolenoid intakeSolenoid = new DoubleSolenoid(1, 2);
-        intakeSolenoid.set(Value.kOff);
-        intakeSolenoid.set(Value.kForward);
-        intakeSolenoid.set(Value.kReverse);
-
-    //conditionals for toggling solenoids
-    
+    public void toggle() {
+        if (toggleState == false) {
+            intakeSolenoid.set(Value.kForward);
+        }
+        
+        else {
+            intakeSolenoid.set(Value.kReverse);
+        }
     }
+
 }

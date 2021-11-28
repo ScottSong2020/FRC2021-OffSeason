@@ -200,8 +200,7 @@ public class Robot extends TimedRobot {
 
         buttons.operatorToggleIntake
             .whenPressed(() -> {
-                intakeSubsystem.startSpinning();
-                intakeSubsystem.spinForward();
+                intakeSubsystem.toggle();
             })
         ;
     

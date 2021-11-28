@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import frc.robot.config.Config;
+import frc.robot.config.Config.TurretConfig;
 import frc.robot.subsystems.BitBucketsSubsystem;
 import frc.robot.utils.DashboardConfig;
 
@@ -17,9 +18,9 @@ public class TurretSubsystem extends BitBucketsSubsystem {
     //Class lacks dashboard updates as of right now
     private WPI_TalonSRX elevation;
     private WPI_TalonSRX azimuth;
-    private double azimuthGearRatio = 28.0/130.0;
-    private double elevationGearRatio = 40.0/70.0;
-    private double ticksPerRevolution = 8192.0;
+    private double azimuthGearRatio = config.turretConfig.AZIMUTH_GEAR_RATIO;
+    private double elevationGearRatio = config.turretConfig.ELEVATION_GEAR_RATIO;
+    private double ticksPerRevolution = config.turretConfig.TICKS_PER_REVOLUTION;
 
     public void init() {
         elevation = new WPI_TalonSRX(config.ELEVATION_MOTOR_ID);

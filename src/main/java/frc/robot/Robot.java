@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Robot extends TimedRobot {
 
@@ -39,7 +41,7 @@ public class Robot extends TimedRobot {
     private BallManagementSubsystem ballManagementSubsystem;
     private VisionSubsystem visionSubsystem;
     
-    private ExecutorService smartDashboardThread = Executors.newSingleThreadExecutor();
+    private ScheduledExecutorService smartDashboardThread = Executors.newSingleThreadScheduledExecutor();
 
     private ShooterCalculator shooterCalculator;
 
@@ -92,27 +94,13 @@ public class Robot extends TimedRobot {
         robotSubsystems.forEach(BitBucketsSubsystem::init);
         buttonsInit();
 
-        smartDashboardThread.submit(() -> {
-            // run forever
-            while (true) {
-                // check if we should still be running, and break if not
-                if (disableDash) {
-                    break;
-                }
-
-                // do some updates
-                for (BitBucketsSubsystem subsystemsToBeAdded : robotSubsystems) {
-                    subsystemsToBeAdded.updateDashboard();
-                }
-                // only update once a second
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+        smartDashboardThread.scheduleWithFixedDelay(() -> {
+            if(!this.disableDash)
+            {
+                for(BitBucketsSubsystem subsystem : robotSubsystems)
+                    subsystem.updateDashboard();
             }
-        });
+        }, 1, 1, TimeUnit.SECONDS);
     }
 
     public void buttonsInit() {

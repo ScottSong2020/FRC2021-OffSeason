@@ -41,6 +41,8 @@ public class Robot extends TimedRobot {
     
     private ExecutorService smartDashboardThread = Executors.newSingleThreadExecutor();
 
+    private ShooterCalculator shooterCalculator;
+
     private boolean disableDash = false;
 
     @Override
@@ -67,6 +69,7 @@ public class Robot extends TimedRobot {
         // Shooter
         if (config.enableShooterSubsytem) {
             robotSubsystems.add(shooterSubsystem = new ShooterSubsystem(config, dashboardConfig));
+            this.shooterCalculator = new ShooterCalculator();
         }
 
         // Drive
@@ -162,7 +165,7 @@ public class Robot extends TimedRobot {
                     if(!this.visionSubsystem.hasTarget()) shooterSubsystem.spinShooter(ShooterCalculator.DEFAULT_SPEED);
                     else
                     {
-                        double targetRPM = new ShooterCalculator().getRPM(this.visionSubsystem.getDistance(), this.visionSubsystem.getAngle());
+                        double targetRPM = this.shooterCalculator.getRPM(this.visionSubsystem.getDistance(), this.visionSubsystem.getAngle());
                         this.shooterSubsystem.spinShooter(targetRPM);
                     }
                 }

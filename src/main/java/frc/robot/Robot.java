@@ -1,6 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -12,18 +11,19 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.climber.ClimberSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.drive.DriveSubsystem;
+import frc.robot.subsystems.shooter.ShooterCalculator;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.spinnyboi.SpinnyBoiSubsystem;
 import frc.robot.subsystems.turret.TurretSubsystem;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.utils.DashboardConfig;
-import frc.robot.utils.PS4Constants;
 
-import java.sql.Driver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Robot extends TimedRobot {
 
@@ -41,7 +41,9 @@ public class Robot extends TimedRobot {
     private BallManagementSubsystem ballManagementSubsystem;
     private VisionSubsystem visionSubsystem;
     
-    private ExecutorService smartDashboardThread = Executors.newSingleThreadExecutor();
+    private ScheduledExecutorService smartDashboardThread = Executors.newSingleThreadScheduledExecutor();
+
+    private ShooterCalculator shooterCalculator;
 
     private boolean disableDash = false;
 
@@ -69,6 +71,7 @@ public class Robot extends TimedRobot {
         // Shooter
         if (config.enableShooterSubsytem) {
             robotSubsystems.add(shooterSubsystem = new ShooterSubsystem(config, dashboardConfig));
+            this.shooterCalculator = new ShooterCalculator();
         }
 
         // Drive
@@ -85,33 +88,24 @@ public class Robot extends TimedRobot {
         if (config.enableIntakeSubsytem) {
             robotSubsystems.add(intakeSubsystem = new IntakeSubsystem(config, dashboardConfig));
         }
+
+        if(config.enableVisionSubsytem) {
+            robotSubsystems.add(visionSubsystem = new VisionSubsystem(config, dashboardConfig));
+        }
+
         // Initialize all subsystems (do this AFTER subsystem objects are created and
         // instantiated)
 
         robotSubsystems.forEach(BitBucketsSubsystem::init);
         buttonsInit();
 
-        smartDashboardThread.submit(() -> {
-            // run forever
-            while (true) {
-                // check if we should still be running, and break if not
-                if (disableDash) {
-                    break;
-                }
-
-                // do some updates
-                for (BitBucketsSubsystem subsystemsToBeAdded : robotSubsystems) {
-                    subsystemsToBeAdded.updateDashboard();
-                }
-                // only update once a second
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
+        smartDashboardThread.scheduleWithFixedDelay(() -> {
+            if(!this.disableDash)
+            {
+                for(BitBucketsSubsystem subsystem : robotSubsystems)
+                    subsystem.updateDashboard();
             }
-        });
+        }, 1, 1, TimeUnit.SECONDS);
     }
 
     public void buttonsInit() {
@@ -153,14 +147,23 @@ public class Robot extends TimedRobot {
                 if (shooterSubsystem.isFeeding())
                     shooterSubsystem.stopFeeder();
                 else
-                    shooterSubsystem.spinFeeder(0.5F);
+                    shooterSubsystem.spinFeeder(ShooterCalculator.FEEDER_OUTPUT);
             }, shooterSubsystem));
 
             buttons.operatorSpinUp.whenPressed(new InstantCommand(() -> {
                 if (shooterSubsystem.isShooting())
                     shooterSubsystem.stopShooter();
                 else
-                    shooterSubsystem.spinShooter(0.5F);
+                {
+                    if(!this.visionSubsystem.hasTarget())
+                        shooterSubsystem.spinShooter(ShooterCalculator.DEFAULT_SPEED);
+                    else
+                    {
+                        double targetRPM = this.shooterCalculator.getRPM(this.visionSubsystem.getDistance(), this.visionSubsystem.getAngle());
+                        this.shooterSubsystem.spinShooter(targetRPM);
+                    }
+                }
+
             }, shooterSubsystem));
         }
 
@@ -170,7 +173,34 @@ public class Robot extends TimedRobot {
                     new RunCommand(() -> driveSubsystem.drive(buttons.driverControl.getRawAxis(buttons.driveSpeedAxis),
                             buttons.driverControl.getRawAxis(buttons.driveTurnAxis)), driveSubsystem));
         }
+            
+    
+        if (config.enableIntakeSubsytem) {
+            buttons.operatorIntakeIn
+                .whenPressed(() -> {
+                    intakeSubsystem.spinForward();
+            })
+                .whenReleased(() -> {
+                    intakeSubsystem.stopSpinning();
+                })
+            ;
+        
 
+            buttons.operatorIntakeOut
+                .whenPressed(() -> {
+                    intakeSubsystem.spinBackward();
+                })
+                .whenReleased(() -> {
+                    intakeSubsystem.stopSpinning();
+                })
+            ;
+
+            buttons.operatorToggleIntake
+                .whenPressed(() -> {
+                    intakeSubsystem.toggle();
+                })
+            ;
+        }
     }
 
     @Override
@@ -192,8 +222,12 @@ public class Robot extends TimedRobot {
     }
 
     public void shoot() {
-        turretSubsystem.setAzimuth(visionSubsystem.getAngle());
-        //how to elevation ??
+        if (visionSubsystem.hasTarget() == true) {
+            turretSubsystem.setAzimuth(visionSubsystem.getAngle());
+            //Both getDistance and elevationConvert are set to record default values.
+            //getDistance = 82.0;, elevationConvert = 45.0;
+            turretSubsystem.setElevation(turretSubsystem.elevationConvert(visionSubsystem.getDistance()));
+        }
     }
 
 

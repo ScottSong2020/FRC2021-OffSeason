@@ -1,5 +1,7 @@
 package frc.robot.config;
 
+import frc.robot.utils.MathUtils;
+
 public class Config {
 
   // List of subsystem names:
@@ -97,6 +99,12 @@ public class Config {
     public double AZIMUTH_GEAR_RATIO = 28.0 / 130.0;
     public double ELEVATION_GEAR_RATIO = 40.0 / 70.0;
     public double TICKS_PER_REVOLUTION = 8192.0;
+
+    public double AZIMUTH_CLAMP_MIN_ticks = MathUtils.unitConverter(-90, 360, AZIMUTH_GEAR_RATIO * TICKS_PER_REVOLUTION);
+    public double AZIMUTH_CLAMP_MAX_ticks = MathUtils.unitConverter(90, 360, AZIMUTH_GEAR_RATIO * TICKS_PER_REVOLUTION);
+    public double ELEVATION_CLAMP_MIN_ticks = MathUtils.unitConverter(0, 360, ELEVATION_GEAR_RATIO * TICKS_PER_REVOLUTION);
+    public double ELEVATION_CLAMP_MAX_ticks = MathUtils.unitConverter(60, 360, ELEVATION_GEAR_RATIO * TICKS_PER_REVOLUTION);
+
   }
 
   public AutonomousConfig autonomousConfig;
